@@ -8,6 +8,15 @@ public class Post {
     private String title;
     private String content;
 
+    public Post() {
+    }
+
+    public Post(String author, String title, String content) {
+        this.author = author;
+        this.title = title;
+        this.content = content;
+    }
+
     public Long getId() {
         return id;
     }
