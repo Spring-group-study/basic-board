@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <title>Title</title>
+</head>
+<body>
+<div class="container d-flex justify-content-center">
+<div class="table-responsive clearfix col-lg-12 col-md-12 col-sm-12">
+<table class="table table-hover">
+    <thead class="table-light">
+    <tr>
+        <th style="width: 5%">#</th>
+        <th style="width: 20%">제목</th>
+        <th style="width: 25%">저자</th>
+        <th style="width: 30%">내용</th>
+        <th style="width: 10%">수정</th>
+        <th style="width: 10%">삭제</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="post, i: ${form}">
+        <td th:text="${post.id}"></td>
+        <td th:text="${post.title}"></td>
+        <td th:text="${post.author}"></td>
+        <td th:text="${post.content}"></td>
+        <td><a class="bi bi-hammer" th:href="@{/post/{postId}(postId = ${post.id})}"></a></td>
+        <td><a class="bi bi-trash" th:href="@{/post/delete/{postId}(postId = ${post.id})}"></a></td>
+    </tr>
+    </tbody>
+</table>
+</div>
+</div>
+</body>
+</html>
