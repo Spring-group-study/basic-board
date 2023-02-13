@@ -38,8 +38,17 @@ public class Post {
         this.content = content;
     }
 
+    public Post() {
+
+    }
+
     public Post(Long id, String author, String title, String content) {
         this.id = id;
+        this.author = author;
+        this.title = title;
+        this.content = content;
+    }
+    public void toEntity(String author, String title, String content){
         this.author = author;
         this.title = title;
         this.content = content;
