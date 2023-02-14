@@ -4,13 +4,18 @@ import com.study.board.entity.Post;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class PostRepositoryImpl implements PostRepository {
 
     //db를 대신 할 인메모리 컬렉션리스트 생성
     private final List<Post> db = new ArrayList<>();
+    //해쉬맵으로 생성가능함, 그러나 이렇게 했을때는 id값을 엔티티에서 제외시키는게 맞고
+    //db에서 input쿼리가 자주 호출된다면 ArrayList가, select 쿼리가 빈번하다면 haspMap이 시간복잡도 상 효율적이다.
+    private final Map<Long, Post> db1 = new HashMap<>();
     //id값 자동증가를 위한 id값 대체 변수
     private Long inputId = 0l;
 
