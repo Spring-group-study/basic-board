@@ -16,4 +16,6 @@ public interface PostRepository {
     public Post update(Post post, Post updateParam);   //dto적용할것
 
     public void delete(Long id);
+
+    public void clear();
 }
