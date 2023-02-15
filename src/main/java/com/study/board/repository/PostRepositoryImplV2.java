@@ -1,6 +1,8 @@
 package com.study.board.repository;
 
+import com.study.board.dto.PostDtoV1;
 import com.study.board.entity.PostV1;
+import com.study.board.mapper.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -9,17 +11,18 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class PostRepositoryImplV1 implements PostRepositoryV1 {
+public class PostRepositoryImplV2 implements PostRepositoryV2 {
 
     private static Map<Long, PostV1> postList = new HashMap<>();
     private static Long sequence = 0L;
 
+    private Mapper mapper = new Mapper();
+
     @Override
-    public PostV1 save(PostV1 post) {
-        //dto받고 entity로 변환 후 postList에 저장
+    public PostV1 save(PostDtoV1 dto) {
+        PostV1 post = mapper.SaveDtoToEntity(dto);
         post.setId(++sequence);
         postList.put(post.getId(), post);
-
         return post;
     }
 
@@ -34,7 +37,7 @@ public class PostRepositoryImplV1 implements PostRepositoryV1 {
     }
 
     @Override
-    public PostV1 update(PostV1 post, PostV1 updateParam) {   //dto적용할것
+    public PostV1 update(PostV1 post, PostDtoV1 updateParam) {   //dto적용할것
         post.setAuthor(updateParam.getAuthor());
         post.setTitle(updateParam.getTitle());
         post.setContent(updateParam.getContent());

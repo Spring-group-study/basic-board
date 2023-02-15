@@ -1,10 +1,29 @@
-package com.study.board.dto;
+package com.study.board.entity;
 
-public class PostSaveDtoV1 {
 
+public class PostV1 {
+
+    private Long id;
     private String author;
     private String title;
     private String content;
+
+    public PostV1() {
+    }
+
+    public PostV1(String author, String title, String content) {
+        this.author = author;
+        this.title = title;
+        this.content = content;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getAuthor() {
         return author;

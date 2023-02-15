@@ -1,6 +1,6 @@
 package com.study.board.controller;
 
-import com.study.board.domain.PostV1;
+import com.study.board.entity.PostV1;
 import com.study.board.repository.PostRepositoryV1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

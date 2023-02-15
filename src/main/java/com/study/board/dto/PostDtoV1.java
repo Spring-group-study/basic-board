@@ -1,28 +1,18 @@
-package com.study.board.domain;
+package com.study.board.dto;
 
+public class PostDtoV1 {
 
-public class PostV1 {
-
-    private Long id;
     private String author;
     private String title;
     private String content;
 
-    public PostV1() {
+    public PostDtoV1() {
     }
 
-    public PostV1(String author, String title, String content) {
+    public PostDtoV1(String author, String title, String content) {
         this.author = author;
         this.title = title;
         this.content = content;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getAuthor() {
