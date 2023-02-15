@@ -44,4 +44,10 @@ public class PostRepositoryImpl implements PostRepository{
     public void delete(Long id) {
         postList.remove(id);
     }
+
+    //테스터용
+    @Override
+    public void clear() {
+        postList.clear();
+    }
 }

@@ -22,6 +22,7 @@ public class PostController {
         this.postRepository = postRepository;
     }
 
+    //게시판 메인
     @GetMapping("/main")
     public String posts(Model model) {
         List<Post> posts = postRepository.findAll();
@@ -29,6 +30,7 @@ public class PostController {
         return "/board/main";
     }
 
+    //단일 게시글
     @GetMapping("/post/{id}")
     public String post(@PathVariable Long id, Model model) {
         Post post = postRepository.findById(id);
@@ -36,6 +38,7 @@ public class PostController {
         return "/board/post";
     }
 
+    //게시글 등록
     @GetMapping("/addPost")
     public String addPost(Model model) {
 /*        th:object 를 적용하려면 먼저 해당 오브젝트 정보를 넘겨주어야 한다.
@@ -46,6 +49,7 @@ public class PostController {
         return "/board/addPost";
     }
 
+    //게시글 등록버튼 누를시 단일게시글 페이지로 redirect -> 새로고침시 게시글 중복등록 막기위함
     @PostMapping("/addPost")    //dto적용할것
     public String addPost(@ModelAttribute Post post, RedirectAttributes redirectAttributes) {
         Post savedPost = postRepository.save(post);
@@ -54,6 +58,7 @@ public class PostController {
         return "redirect:/board/post/{id}";
     }
 
+    //게시글 수정
     @GetMapping("/post/{id}/editPost")
     public String editPost(@PathVariable Long id,Model model) {
         Post post = postRepository.findById(id);
@@ -61,6 +66,7 @@ public class PostController {
         return "/board/editPost";
     }
 
+    //게시글 수정버튼 누를 시 단일 게시글 페이지로 이동
     @PostMapping("/post/{id}/editPost")     //dto적용할것
     public String editPost(@PathVariable Long id, @ModelAttribute Post updateParam) {
         Post pastPost = postRepository.findById(updateParam.getId());
