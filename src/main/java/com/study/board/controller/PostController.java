@@ -69,7 +69,7 @@ public class PostController {
     }
 
 
-    //테스터용(초기 데이터)
+    //테스트용(초기 데이터)
     @PostConstruct
     public void init() {
         postRepository.save(new Post("김현수", "테스트제목1", "테스트내용1"));

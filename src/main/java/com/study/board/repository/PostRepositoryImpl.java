@@ -1,7 +1,6 @@
 package com.study.board.repository;
 
 import com.study.board.domain.Post;
-import com.study.board.dto.PostSaveDto;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -10,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class MemoryPostRepository implements PostRepository{
+public class PostRepositoryImpl implements PostRepository{
 
-    public static Map<Long, Post> postList = new HashMap<>();
+    private static Map<Long, Post> postList = new HashMap<>();
     private static Long sequence = 0L;
 
     @Override
