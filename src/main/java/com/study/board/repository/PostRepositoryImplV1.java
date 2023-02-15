@@ -1,7 +1,6 @@
 package com.study.board.repository;
 
-import com.study.board.domain.Post;
-import com.study.board.dto.PostSaveDto;
+import com.study.board.domain.PostV1;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -10,13 +9,13 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class MemoryPostRepository implements PostRepository{
+public class PostRepositoryImplV1 implements PostRepositoryV1 {
 
-    public static Map<Long, Post> postList = new HashMap<>();
+    private static Map<Long, PostV1> postList = new HashMap<>();
     private static Long sequence = 0L;
 
     @Override
-    public Post save(Post post) {
+    public PostV1 save(PostV1 post) {
         post.setId(++sequence);
         postList.put(post.getId(), post);
 
@@ -24,17 +23,17 @@ public class MemoryPostRepository implements PostRepository{
     }
 
     @Override
-    public Post findById(Long id) {
+    public PostV1 findById(Long id) {
         return postList.get(id);
     }
 
     @Override
-    public List<Post> findAll() {
+    public List<PostV1> findAll() {
         return new ArrayList<>(postList.values());
     }
 
     @Override
-    public Post update(Post post, Post updateParam) {   //dto적용할것
+    public PostV1 update(PostV1 post, PostV1 updateParam) {   //dto적용할것
         post.setAuthor(updateParam.getAuthor());
         post.setTitle(updateParam.getTitle());
         post.setContent(updateParam.getContent());
