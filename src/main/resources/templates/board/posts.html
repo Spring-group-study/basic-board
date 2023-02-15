@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>전체 글 리스트</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/basic.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 800px;
+        }
+        tr,td{
+            text-align: left;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>글 목록</h2>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary float-end"
+                    onclick="location.href='addForm.html'"
+                    th:onclick="|location.href='@{/board/posts/add}'|"
+                    type="button">게시글 등록
+            </button>
+        </div>
+    </div>
+
+    <hr class="my-1">
+    <div>
+        <table class="table">
+            <thead>
+            <th>게시물 ID</th>
+            <th>저자</th>
+            <th>제목</th>
+            </thead>
+
+            <tbody>
+            <tr th:each="post : ${posts}">
+                <td>
+                    <a href="post.html" th:href="@{/board/posts/{postId} (postId=${post.id})}" th:text="${post.id}">게시물 ID</a>
+                </td>
+                <td th:text="${post.author}">저자</td>
+                <td th:text="${post.title}">제목</td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
