@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MemoryPostRepositoryTest {
 
-    private PostRepository postRepository = new MemoryPostRepository();
+    private PostRepository postRepository = new PostRepositoryImpl();
 
     @BeforeEach
     void clear() {
@@ -47,9 +47,23 @@ class MemoryPostRepositoryTest {
 
     @Test
     void update() {
+        Post post = new Post("김현수","TestTitle","TestContent");
+        Post savedPost = postRepository.save(post);
+
+        Post update = new Post("김현수2", "제목2", "내용2");
+        Post updatedPost = postRepository.update(post, update);
+
+        Assertions.assertThat(update.getAuthor()).isEqualTo(updatedPost.getAuthor());
+        Assertions.assertThat(update.getTitle()).isEqualTo(updatedPost.getTitle());
+        Assertions.assertThat(update.getContent()).isEqualTo(updatedPost.getContent());
     }
 
     @Test
     void delete() {
+        Post post = new Post("김현수","TestTitle","TestContent");
+        Post savedPost = postRepository.save(post);
+
+        postRepository.delete(savedPost.getId());
+        Assertions.assertThat(savedPost).isNotIn(postRepository.findAll());
     }
 }
