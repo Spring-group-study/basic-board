@@ -14,7 +14,7 @@ public class PostRepositoryImpl implements PostRepository{
 
     @Override
     public Post save(Post post) {
-        map.put(post.getId(),post);
+        map.put(post.getId()+1,post);
         return map.get(post.getId());
     }
 

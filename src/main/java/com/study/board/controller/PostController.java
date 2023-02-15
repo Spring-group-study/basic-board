@@ -23,7 +23,7 @@ public class PostController {
         this.postMapper = postMapper;
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity createPost(@Valid @RequestBody PostDto.Post dto) {
         Post post = postMapper.postDtoToPost(dto);
         Post response = postService.createPost(post);
