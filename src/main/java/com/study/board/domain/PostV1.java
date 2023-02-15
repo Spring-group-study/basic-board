@@ -1,17 +1,17 @@
 package com.study.board.domain;
 
 
-public class Post {
+public class PostV1 {
 
     private Long id;
     private String author;
     private String title;
     private String content;
 
-    public Post() {
+    public PostV1() {
     }
 
-    public Post(String author, String title, String content) {
+    public PostV1(String author, String title, String content) {
         this.author = author;
         this.title = title;
         this.content = content;

@@ -1,7 +1,7 @@
 package com.study.board.controller;
 
-import com.study.board.domain.Post;
-import com.study.board.repository.PostRepository;
+import com.study.board.domain.PostV1;
+import com.study.board.repository.PostRepositoryV1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,19 +13,19 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/board")
-public class PostController {
+public class PostControllerV1 {
 
-    private PostRepository postRepository;
+    private PostRepositoryV1 postRepositoryV1;
 
     @Autowired
-    public PostController(PostRepository postRepository) {
-        this.postRepository = postRepository;
+    public PostControllerV1(PostRepositoryV1 postRepositoryV1) {
+        this.postRepositoryV1 = postRepositoryV1;
     }
 
     //게시판 메인
     @GetMapping("/main")
     public String posts(Model model) {
-        List<Post> posts = postRepository.findAll();
+        List<PostV1> posts = postRepositoryV1.findAll();
         model.addAttribute("posts", posts);
         return "/board/main";
     }
@@ -33,7 +33,7 @@ public class PostController {
     //단일 게시글
     @GetMapping("/post/{id}")
     public String post(@PathVariable Long id, Model model) {
-        Post post = postRepository.findById(id);
+        PostV1 post = postRepositoryV1.findById(id);
         model.addAttribute("post", post);
         return "/board/post";
     }
@@ -45,14 +45,14 @@ public class PostController {
         등록 폼이기 때문에 데이터가 비어있는 빈 오브젝트를 만들어서 뷰에 전달하자.
         ->빈 생성자 만들어줘야함
         */
-        model.addAttribute("post", new Post());
+        model.addAttribute("post", new PostV1());
         return "/board/addPost";
     }
 
     //게시글 등록버튼 누를시 단일게시글 페이지로 redirect -> 새로고침시 게시글 중복등록 막기위함
     @PostMapping("/addPost")    //dto적용할것
-    public String addPost(@ModelAttribute Post post, RedirectAttributes redirectAttributes) {
-        Post savedPost = postRepository.save(post);
+    public String addPost(@ModelAttribute PostV1 post, RedirectAttributes redirectAttributes) {
+        PostV1 savedPost = postRepositoryV1.save(post);
         redirectAttributes.addAttribute("id", savedPost.getId());
         redirectAttributes.addAttribute("status", true);
         return "redirect:/board/post/{id}";
@@ -61,16 +61,16 @@ public class PostController {
     //게시글 수정
     @GetMapping("/post/{id}/editPost")
     public String editPost(@PathVariable Long id,Model model) {
-        Post post = postRepository.findById(id);
+        PostV1 post = postRepositoryV1.findById(id);
         model.addAttribute("post", post);
         return "/board/editPost";
     }
 
     //게시글 수정버튼 누를 시 단일 게시글 페이지로 이동
     @PostMapping("/post/{id}/editPost")     //dto적용할것
-    public String editPost(@PathVariable Long id, @ModelAttribute Post updateParam) {
-        Post pastPost = postRepository.findById(updateParam.getId());
-        postRepository.update(pastPost,updateParam);
+    public String editPost(@PathVariable Long id, @ModelAttribute PostV1 updateParam) {
+        PostV1 pastPost = postRepositoryV1.findById(updateParam.getId());
+        postRepositoryV1.update(pastPost,updateParam);
         return "redirect:/board/post/{id}";
     }
 
@@ -78,8 +78,8 @@ public class PostController {
     //테스트용(초기 데이터)
     @PostConstruct
     public void init() {
-        postRepository.save(new Post("김현수", "테스트제목1", "테스트내용1"));
-        postRepository.save(new Post("김현승", "테스트제목2", "테스트내용2"));
+        postRepositoryV1.save(new PostV1("김현수", "테스트제목1", "테스트내용1"));
+        postRepositoryV1.save(new PostV1("김현승", "테스트제목2", "테스트내용2"));
     }
 
 }

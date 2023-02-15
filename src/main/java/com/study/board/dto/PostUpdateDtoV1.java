@@ -1,6 +1,6 @@
 package com.study.board.dto;
 
-public class PostSaveDto {
+public class PostUpdateDtoV1 {
 
     private String author;
     private String title;
