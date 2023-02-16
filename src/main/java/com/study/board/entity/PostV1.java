@@ -1,4 +1,4 @@
-package com.study.board.domain;
+package com.study.board.entity;
 
 
 public class PostV1 {

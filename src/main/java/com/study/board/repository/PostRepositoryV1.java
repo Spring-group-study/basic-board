@@ -1,6 +1,6 @@
 package com.study.board.repository;
 
-import com.study.board.domain.PostV1;
+import com.study.board.entity.PostV1;
 
 import java.util.List;
 

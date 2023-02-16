@@ -1,10 +1,19 @@
 package com.study.board.dto;
 
-public class PostSaveDtoV1 {
+public class PostDtoV2 {
 
     private String author;
     private String title;
     private String content;
+
+    public PostDtoV2() {
+    }
+
+    public PostDtoV2(String author, String title, String content) {
+        this.author = author;
+        this.title = title;
+        this.content = content;
+    }
 
     public String getAuthor() {
         return author;
