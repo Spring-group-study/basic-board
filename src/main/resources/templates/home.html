@@ -17,6 +17,12 @@
             게시판(V.1)
         </button>
     </p>
+    <p class="col">
+        <button class="w-100 btn btn-lg btn-info" type="button"
+                th:onclick="|location.href='@{/v2/posts}'|">
+            게시판(V.2)
+        </button>
+    </p>
     </p>
 
     <div class="row">
@@ -24,6 +30,12 @@
             <button class="w-100 btn btn-secondary btn-lg" type="button"
                     th:onclick="|location.href='@{/v1/posts/new}'|">
                 글 쓰기(V.1)
+            </button>
+        </div>
+        <div class="col">
+            <button class="w-100 btn btn-secondary btn-lg" type="button"
+                    th:onclick="|location.href='@{/v2/posts/new}'|">
+                글 쓰기(V.2)
             </button>
         </div>
         <div class="col">

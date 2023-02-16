@@ -24,28 +24,17 @@ public class PostControllerV2 {
         this.postServiceV2 = postServiceV2;
     }
 
-    @GetMapping("/")
-    public String home() {
-        return "/home";
-    }
-
-
-    @GetMapping("/home")
-    public String toHome() {
-        return "/home";
-    }
-
     @GetMapping("/posts")
     public String posts(Model model) {
         List<Post> allPost = postServiceV2.getAllPost();
         model.addAttribute("form", allPost);
-        return "/postList";
+        return "/postListV2";
     }
 
     @GetMapping("/posts/new")
     public String createPost(Model model) {
         model.addAttribute("form",new Post());
-        return "/newPost";
+        return "/newPostV2";
     }
 
     @PostMapping("/posts/new")
@@ -57,14 +46,14 @@ public class PostControllerV2 {
     @GetMapping("/post/delete/{postId}")
     public String deletePost(@PathVariable(value = "postId") Long id) {
         postServiceV2.deletePost(id);
-        return "/postList";
+        return "redirect:/home";
     }
 
     @GetMapping("/post/{postId}")
     public String post(Model model, @PathVariable(value = "postId") Long id) {
         Post onePost = postServiceV2.getOnePost(id);
         model.addAttribute("post", onePost);
-        return "/postDetail";
+        return "/postDetailV2";
     }
 
     @PostMapping("/post/update")
@@ -75,7 +64,7 @@ public class PostControllerV2 {
 
     @PostConstruct
     public void init() {
-        for (int i = 0; i <11; i++){
+        for (int i = 0; i <6; i++){
             String title = "제목" + i;
             String author = "작성자" + i;
             String content = "내용" + i;

@@ -30,7 +30,7 @@ public class PostServiceV2Impl implements PostServiceV2 {
 
     @Override
     public void savePost(Post post) {
-        repository.save(post);
+        repository.savePost(post);
     }
 
     @Override

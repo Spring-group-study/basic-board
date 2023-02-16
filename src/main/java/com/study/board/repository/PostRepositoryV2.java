@@ -9,6 +9,8 @@ public interface PostRepositoryV2 {
     Post findById(Long id);
     void save(Post post);
 
+    void savePost(Post post);
+
     void update(Long id, String author, String content, String title);
 
     void delete(Long id);

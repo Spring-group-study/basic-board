@@ -23,28 +23,17 @@ public class PostControllerV1 {
         this.postServiceV1 = postServiceV1;
     }
 
-    @GetMapping("/")
-    public String home() {
-        return "/home";
-    }
-
-
-    @GetMapping("/home")
-    public String toHome() {
-        return "/home";
-    }
-
     @GetMapping("/posts")
     public String posts(Model model) {
         List<Post> allPost = postServiceV1.getAllPost();
         model.addAttribute("form", allPost);
-        return "/postList";
+        return "/postListV1";
     }
 
     @GetMapping("/posts/new")
     public String createPost(Model model) {
         model.addAttribute("form",new Post());
-        return "/newPost";
+        return "/newPostV1";
     }
 
     @PostMapping("/posts/new")
@@ -56,14 +45,14 @@ public class PostControllerV1 {
     @GetMapping("/post/delete/{postId}")
     public String deletePost(@PathVariable(value = "postId") Long id) {
         postServiceV1.deletePost(id);
-        return "/postList";
+        return "/home";
     }
 
     @GetMapping("/post/{postId}")
     public String post(Model model, @PathVariable(value = "postId") Long id) {
         Post onePost = postServiceV1.getOnePost(id);
         model.addAttribute("post", onePost);
-        return "/postDetail";
+        return "/postDetailV1";
     }
 
     @PostMapping("/post/update/")
