@@ -1,20 +1,20 @@
 package com.study.board.repository;
 
-import com.study.board.dto.PostDtoV2;
-import com.study.board.entity.PostV2;
+import com.study.board.dto.PostDto;
+import com.study.board.entity.Post;
 
 import java.util.List;
 
-//V2에서 DTO 적용
+//DTO 적용
 public interface PostRepositoryV2 {
 
-    public PostV2 save(PostDtoV2 dto);
+    public Post save(PostDto dto);
 
-    public PostV2 findById(Long id);
+    public Post findById(Long id);
 
-    public List<PostV2> findAll();
+    public List<Post> findAll();
 
-    public PostV2 update(PostV2 post, PostDtoV2 updateParam);
+    public Post update(Post post, PostDto updateParam);
 
     public void delete(Long id);
 

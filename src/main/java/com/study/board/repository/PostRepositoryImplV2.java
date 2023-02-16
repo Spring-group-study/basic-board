@@ -1,57 +1,99 @@
 package com.study.board.repository;
 
-import com.study.board.dto.PostDtoV2;
-import com.study.board.entity.PostV2;
+import com.study.board.dto.PostDto;
+import com.study.board.entity.Post;
 import com.study.board.mapper.MapperV2;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import javax.sql.DataSource;
 import java.util.List;
-import java.util.Map;
+
+/**
+ * PostDto 적용
+ * JDBC Template + H2 DB 사용
+ */
 
 @Repository
 public class PostRepositoryImplV2 implements PostRepositoryV2 {
 
-    private static Map<Long, PostV2> postList = new HashMap<>();
-    private static Long sequence = 0L;
+    private final JdbcTemplate template;
+
+    public PostRepositoryImplV2(DataSource dataSource) {
+        this.template = new JdbcTemplate(dataSource);
+    }
 
     private MapperV2 mapper = new MapperV2();
 
     @Override
-    public PostV2 save(PostDtoV2 dto) {
-        PostV2 post = mapper.SaveDtoToEntity(dto);
-        post.setId(++sequence);
-        postList.put(post.getId(), post);
+    public Post save(PostDto dto) {
+        Post post = mapper.SaveDtoToEntity(dto);
+        String sql = "insert into post(author,title,content) values (?,?,?)";
+        template.update(sql, post.getAuthor(), post.getTitle(), post.getContent());
         return post;
     }
 
     @Override
-    public PostV2 findById(Long id) {
-        return postList.get(id);
+    public Post findById(Long postId) {
+        String sql = "select * from post where post_id=?";
+        return template.queryForObject(sql, postRowMapper(), postId);
     }
 
+    private RowMapper<Post> postRowMapper() {
+        return (rs, rowNum)->{  //while + rs.Next() 있어서 row1개 나올수도 있고 여러개 나올수도 있음
+            Post post = new Post(rs.getString("author"),
+                    rs.getString("title"),
+                    rs.getString("content"));
+            post.setPostId(rs.getLong("post_id"));
+            return post;
+        };
+    }
+
+
+    //findAll (1) : 메서드 따로 빼서 구현 -> 제일 깔끔
+    @Override
+    public List<Post> findAll() {
+        String sql = "select * from post";
+        return template.query(sql, postRowMapper());    //위 메서드 이용
+    }
+
+
+    //findAll (2) : 익명클래스 이용
+    /**
     @Override
     public List<PostV2> findAll() {
-        return new ArrayList<>(postList.values());
+        String sql = "select * from post";
+        return template.query(sql, new RowMapper<PostV2>() {
+            @Override
+            public PostV2 mapRow(ResultSet rs, int rowNum) throws SQLException {
+                PostV2 post = new PostV2(rs.getString("author"),
+                        rs.getString("title"),
+                        rs.getString("content"));
+                post.setPostId(rs.getLong("post_id"));
+                return post;
+            }
+        });
     }
+    */
 
     @Override
-    public PostV2 update(PostV2 post, PostDtoV2 updateParam) {   //dto적용할것
-        post.setAuthor(updateParam.getAuthor());
-        post.setTitle(updateParam.getTitle());
-        post.setContent(updateParam.getContent());
-        return post;
+    public Post update(Post post, PostDto updateParam) {
+        Post updatedPost = mapper.updateDtoToEntity(post, updateParam);
+        String sql = "update post set (author,title,content)=(?,?,?) where post_id=?";
+        template.update(sql, updatedPost.getAuthor(), updatedPost.getTitle(), updatedPost.getContent(), updatedPost.getPostId());
+        return updatedPost;
     }
 
     @Override
     public void delete(Long id) {
-        postList.remove(id);
+        String sql = "delete from post where post_id=?";
+        template.update(sql, id);
     }
 
     //테스터용
     @Override
     public void clear() {
-        postList.clear();
+        String sql = "delete from post";
     }
 }

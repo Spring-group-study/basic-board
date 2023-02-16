@@ -1,18 +1,18 @@
 package com.study.board.repository;
 
-import com.study.board.entity.PostV1;
+import com.study.board.entity.Post;
 
 import java.util.List;
 
 public interface PostRepositoryV1 {
 
-    public PostV1 save(PostV1 post);
+    public Post save(Post post);
 
-    public PostV1 findById(Long id);
+    public Post findById(Long id);
 
-    public List<PostV1> findAll();
+    public List<Post> findAll();
 
-    public PostV1 update(PostV1 post, PostV1 updateParam);   //dto적용할것
+    public Post update(Post post, Post updateParam);   //dto적용할것
 
     public void delete(Long id);
 

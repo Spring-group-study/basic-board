@@ -1,15 +1,15 @@
 package com.study.board.dto;
 
-public class PostDtoV2 {
+public class PostDto {
 
     private String author;
     private String title;
     private String content;
 
-    public PostDtoV2() {
+    public PostDto() {
     }
 
-    public PostDtoV2(String author, String title, String content) {
+    public PostDto(String author, String title, String content) {
         this.author = author;
         this.title = title;
         this.content = content;

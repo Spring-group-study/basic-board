@@ -45,10 +45,10 @@
         <tbody>
         <tr th:each="post : ${posts}">
 
-            <td><a href="post" th:href="@{post/{id} (id=${post.id})}"
-            th:text="${post.id}">게시물id</a></td>
+            <td><a href="post" th:href="@{post/{id} (id=${post.postId})}"
+            th:text="${post.postId}">게시물id</a></td>
 
-            <td><a href="post" th:href="@{post/{id} (id=${post.id})}"
+            <td><a href="post" th:href="@{post/{id} (id=${post.postId})}"
                    th:text="${post.title}">게시물 제목</a></td>
 
             <td th:text="${post.author}">작성자</td>
