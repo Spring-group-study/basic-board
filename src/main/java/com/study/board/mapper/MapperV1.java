@@ -1,16 +1,16 @@
 package com.study.board.mapper;
 
-import com.study.board.dto.PostDtoV1;
-import com.study.board.entity.PostV1;
+import com.study.board.dto.PostDto;
+import com.study.board.entity.Post;
 
 public class MapperV1 {
-    public PostV1 SaveDtoToEntity(PostDtoV1 dto) {
+    public Post SaveDtoToEntity(PostDto dto) {
         //롬복 추가 후 builder패턴 이용할것
-        PostV1 post = new PostV1(dto.getAuthor(), dto.getTitle(), dto.getContent());
+        Post post = new Post(dto.getAuthor(), dto.getTitle(), dto.getContent());
         return post;
     }
 
-    public PostV1 updateDtoToEntity(PostV1 post, PostDtoV1 dto) {
+    public Post updateDtoToEntity(Post post, PostDto dto) {
         post.setAuthor(dto.getAuthor());
         post.setTitle(dto.getTitle());
         post.setContent(dto.getContent());

@@ -1,8 +1,7 @@
 package com.study.board.controller;
 
-import com.study.board.dto.PostDtoV2;
-import com.study.board.entity.PostV1;
-import com.study.board.entity.PostV2;
+import com.study.board.dto.PostDto;
+import com.study.board.entity.Post;
 import com.study.board.repository.PostRepositoryV2;
 import com.study.board.service.PostServiceV2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,7 @@ public class PostControllerV2 {
     //게시판 메인
     @GetMapping("/main")
     public String posts(Model model) {
-        List<PostV2> posts = postServiceV2.findAll();
+        List<Post> posts = postServiceV2.findAll();
         model.addAttribute("posts", posts);
         return "/board/main";
     }
@@ -39,7 +38,7 @@ public class PostControllerV2 {
     //단일 게시글
     @GetMapping("/post/{id}")
     public String post(@PathVariable Long id, Model model) {
-        PostV2 post = postServiceV2.findById(id);
+        Post post = postServiceV2.findById(id);
         model.addAttribute("post", post);
         return "/board/post";
     }
@@ -47,15 +46,21 @@ public class PostControllerV2 {
     //게시글 등록
     @GetMapping("/addPost")
     public String addPost(Model model) {
-        model.addAttribute("post", new PostDtoV2());
+        model.addAttribute("post", new PostDto());
         return "/board/addPost";
     }
 
+    /**
+     * 질문 : Post savedPost = postServiceV2.save(dto); 이후에 savedPost.getPostId()가 null이 나와서 오류페이지가 뜸...
+     *
+     */
     //게시글 등록버튼 누를시 단일게시글 페이지로 redirect -> 새로고침시 게시글 중복등록 막기위함
-    @PostMapping("/addPost")    //dto적용할것
-    public String addPost(@ModelAttribute PostDtoV2 dto, RedirectAttributes redirectAttributes) {
-        PostV2 savedPost = postServiceV2.save(dto);
-        redirectAttributes.addAttribute("id", savedPost.getId());
+    @PostMapping("/addPost")
+    public String addPost(@ModelAttribute PostDto dto, RedirectAttributes redirectAttributes) {
+        Post savedPost = postServiceV2.save(dto);
+        System.out.println("savedPost.getPostId() = " + savedPost.getPostId());     //null나옴
+
+        redirectAttributes.addAttribute("id", savedPost.getPostId());
         redirectAttributes.addAttribute("status", true);
         return "redirect:/board/post/{id}";
     }
@@ -63,15 +68,15 @@ public class PostControllerV2 {
     //게시글 수정
     @GetMapping("/post/{id}/editPost")
     public String editPost(@PathVariable Long id,Model model) {
-        PostV2 post = postServiceV2.findById(id);
+        Post post = postServiceV2.findById(id);
         model.addAttribute("post", post);
         return "/board/editPost";
     }
 
     //게시글 수정버튼 누를 시 단일 게시글 페이지로 이동
     @PostMapping("/post/{id}/editPost")     //dto적용할것
-    public String editPost(@PathVariable Long id, @ModelAttribute PostDtoV2 updateParam) {
-        PostV2 pastPost = postServiceV2.findById(id);
+    public String editPost(@PathVariable Long id, @ModelAttribute PostDto updateParam) {
+        Post pastPost = postServiceV2.findById(id);
         postServiceV2.update(pastPost,updateParam);
         return "redirect:/board/post/{id}";
     }
@@ -80,8 +85,8 @@ public class PostControllerV2 {
     //테스트용(초기 데이터)
     @PostConstruct
     public void init() {
-        postServiceV2.save(new PostDtoV2("김현수", "테스트제목1", "테스트내용1"));
-        postServiceV2.save(new PostDtoV2("김현승", "테스트제목2", "테스트내용2"));
+        postServiceV2.save(new PostDto("김현수", "테스트제목1", "테스트내용1"));
+        postServiceV2.save(new PostDto("김현승", "테스트제목2", "테스트내용2"));
     }
 
 }

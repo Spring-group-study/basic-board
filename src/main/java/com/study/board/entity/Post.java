@@ -1,28 +1,28 @@
 package com.study.board.entity;
 
 
-public class PostV1 {
+public class Post {
 
-    private Long id;
+    private Long postId;
     private String author;
     private String title;
     private String content;
 
-    public PostV1() {
+    public Post() {
     }
 
-    public PostV1(String author, String title, String content) {
+    public Post(String author, String title, String content) {
         this.author = author;
         this.title = title;
         this.content = content;
     }
 
-    public Long getId() {
-        return id;
+    public Long getPostId() {
+        return postId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPostId(Long postId) {
+        this.postId = postId;
     }
 
     public String getAuthor() {

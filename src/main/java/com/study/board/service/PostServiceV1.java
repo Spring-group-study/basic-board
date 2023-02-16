@@ -1,9 +1,7 @@
 package com.study.board.service;
 
-import com.study.board.entity.PostV1;
-import com.study.board.dto.PostDtoV1;
+import com.study.board.entity.Post;
 import com.study.board.repository.PostRepositoryV1;
-import com.study.board.repository.PostRepositoryV2;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,19 +15,19 @@ public class PostServiceV1 {
         this.postRepository = postRepository;
     }
 
-    public PostV1 save(PostV1 dto) {
+    public Post save(Post dto) {
         return postRepository.save(dto);
     }
 
-    public PostV1 findById(Long id) {
+    public Post findById(Long id) {
         return postRepository.findById(id);
     }
 
-    public List<PostV1> findAll() {
+    public List<Post> findAll() {
         return postRepository.findAll();
     }
 
-    public PostV1 update(PostV1 post, PostV1 updateParam) {
+    public Post update(Post post, Post updateParam) {
         return postRepository.update(post, updateParam);
     }
 }
