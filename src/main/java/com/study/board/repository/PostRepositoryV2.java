@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public class PostRepositoryV2 implements PostRepositoryV1{
+    //jdbc template 주입
     private final JdbcTemplate jdbcTemplate;
 
     public PostRepositoryV2(JdbcTemplate jdbcTemplate) {
