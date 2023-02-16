@@ -1,8 +1,8 @@
 package com.study.board.repository;
 
-import com.study.board.dto.PostDtoV1;
-import com.study.board.entity.PostV1;
-import com.study.board.mapper.Mapper;
+import com.study.board.dto.PostDtoV2;
+import com.study.board.entity.PostV2;
+import com.study.board.mapper.MapperV2;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -13,31 +13,31 @@ import java.util.Map;
 @Repository
 public class PostRepositoryImplV2 implements PostRepositoryV2 {
 
-    private static Map<Long, PostV1> postList = new HashMap<>();
+    private static Map<Long, PostV2> postList = new HashMap<>();
     private static Long sequence = 0L;
 
-    private Mapper mapper = new Mapper();
+    private MapperV2 mapper = new MapperV2();
 
     @Override
-    public PostV1 save(PostDtoV1 dto) {
-        PostV1 post = mapper.SaveDtoToEntity(dto);
+    public PostV2 save(PostDtoV2 dto) {
+        PostV2 post = mapper.SaveDtoToEntity(dto);
         post.setId(++sequence);
         postList.put(post.getId(), post);
         return post;
     }
 
     @Override
-    public PostV1 findById(Long id) {
+    public PostV2 findById(Long id) {
         return postList.get(id);
     }
 
     @Override
-    public List<PostV1> findAll() {
+    public List<PostV2> findAll() {
         return new ArrayList<>(postList.values());
     }
 
     @Override
-    public PostV1 update(PostV1 post, PostDtoV1 updateParam) {   //dto적용할것
+    public PostV2 update(PostV2 post, PostDtoV2 updateParam) {   //dto적용할것
         post.setAuthor(updateParam.getAuthor());
         post.setTitle(updateParam.getTitle());
         post.setContent(updateParam.getContent());

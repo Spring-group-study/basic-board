@@ -1,35 +1,36 @@
 package com.study.board.service;
 
-import com.study.board.entity.PostV1;
 import com.study.board.dto.PostDtoV1;
-import com.study.board.repository.PostRepositoryV1;
+import com.study.board.dto.PostDtoV2;
+import com.study.board.entity.PostV1;
+import com.study.board.entity.PostV2;
 import com.study.board.repository.PostRepositoryV2;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class PostServiceV1 {
+public class PostServiceV2 {
 
-    private final PostRepositoryV1 postRepository;
+    private final PostRepositoryV2 postRepository;
 
-    public PostServiceV1(PostRepositoryV1 postRepository) {
+    public PostServiceV2(PostRepositoryV2 postRepository) {
         this.postRepository = postRepository;
     }
 
-    public PostV1 save(PostV1 dto) {
+    public PostV2 save(PostDtoV2 dto) {
         return postRepository.save(dto);
     }
 
-    public PostV1 findById(Long id) {
+    public PostV2 findById(Long id) {
         return postRepository.findById(id);
     }
 
-    public List<PostV1> findAll() {
+    public List<PostV2> findAll() {
         return postRepository.findAll();
     }
 
-    public PostV1 update(PostV1 post, PostV1 updateParam) {
+    public PostV2 update(PostV2 post, PostDtoV2 updateParam) {
         return postRepository.update(post, updateParam);
     }
 }
