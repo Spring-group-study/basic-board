@@ -10,17 +10,17 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class PostServiceImplTest {
+class PostServiceV1ImplTest {
 
     @Autowired
-    private PostRepository postRepository;
+    private PostRepositoryV1 postRepositoryV1;
 
     @Test
     public void 전체조회() throws Exception {
         //given
 
         //when
-        List<Post> all = postRepository.findAll();
+        List<Post> all = postRepositoryV1.findAll();
 
         //then
         assertThat(all.size()).isNotEqualTo(0);
@@ -29,9 +29,9 @@ class PostServiceImplTest {
     public void 한건_조회() throws Exception {
         //given
         Post testPost = new Post(15l, "테스트", "테스트", "테스트");
-        postRepository.save(testPost);
+        postRepositoryV1.save(testPost);
         //when
-        Post findPost = postRepository.findById(12l);
+        Post findPost = postRepositoryV1.findById(12l);
         //then
         assertThat(findPost.getAuthor()).isEqualTo(testPost.getAuthor());
 
@@ -41,10 +41,10 @@ class PostServiceImplTest {
         //given
         Post testPost = new Post();
         testPost.toEntity("테스트", "테스트", "테스트");
-        postRepository.save(testPost);
+        postRepositoryV1.save(testPost);
         //when
-        postRepository.update(12l,"테스트1","테스트2","테스트3");
-        Post findPost = postRepository.findById(12l);
+        postRepositoryV1.update(12l,"테스트1","테스트2","테스트3");
+        Post findPost = postRepositoryV1.findById(12l);
         //then
         assertThat(findPost.getAuthor()).isEqualTo("테스트1");
     }
@@ -53,10 +53,10 @@ class PostServiceImplTest {
         //given
         Post testPost = new Post();
         testPost.toEntity("테스트", "테스트", "테스트");
-        postRepository.save(testPost);
+        postRepositoryV1.save(testPost);
         //when
-        postRepository.delete(12l);
+        postRepositoryV1.delete(12l);
         //then
-        assertThat(postRepository.findAll().size()).isEqualTo(11);
+        assertThat(postRepositoryV1.findAll().size()).isEqualTo(11);
     }
 }

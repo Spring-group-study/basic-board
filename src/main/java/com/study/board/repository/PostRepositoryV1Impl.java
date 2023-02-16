@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class PostRepositoryImpl implements PostRepository {
+public class PostRepositoryV1Impl implements PostRepositoryV1 {
 
     //db를 대신 할 인메모리 컬렉션리스트 생성
     private static final List<Post> db = new ArrayList<>();

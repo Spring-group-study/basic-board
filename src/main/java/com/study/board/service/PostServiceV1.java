@@ -4,7 +4,7 @@ import com.study.board.entity.Post;
 
 import java.util.List;
 
-public interface PostService {
+public interface PostServiceV1 {
 
     List<Post> getAllPost();
     Post getOnePost(Long id);

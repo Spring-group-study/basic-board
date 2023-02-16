@@ -1,17 +1,17 @@
 package com.study.board.service;
 
 import com.study.board.entity.Post;
-import com.study.board.repository.PostRepository;
+import com.study.board.repository.PostRepositoryV1;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class PostServiceImpl implements PostService {
+public class PostServiceV1Impl implements PostServiceV1 {
 
-    private final PostRepository repository;
+    private final PostRepositoryV1 repository;
 
-    public PostServiceImpl(PostRepository repository) {
+    public PostServiceV1Impl(PostRepositoryV1 repository) {
         this.repository = repository;
     }
 

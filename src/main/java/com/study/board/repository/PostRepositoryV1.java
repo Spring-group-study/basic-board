@@ -3,7 +3,7 @@ package com.study.board.repository;
 import com.study.board.entity.Post;
 
 import java.util.List;
-public interface PostRepository {
+public interface PostRepositoryV1 {
     List<Post> findAll();
     Post findById(Long id);
     void save(Post post);
