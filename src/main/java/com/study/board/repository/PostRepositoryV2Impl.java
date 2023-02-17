@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
+@Transactional(readOnly = true)
 public class PostRepositoryV2Impl implements PostRepositoryV2 {
     //jdbc template 주입
     private final JdbcTemplate jdbcTemplate;
@@ -46,6 +48,7 @@ public class PostRepositoryV2Impl implements PostRepositoryV2 {
     // JDBC Core에서 제공하는 SimpleJdbcInsert메서드를 사용해서
     // HashMap에 데이터를 담아 jdbcInsert로 db Insert query를 생성한다.
     @Override
+    @Transactional
     public void save(Post post) {
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         jdbcInsert.withTableName("post").usingGeneratedKeyColumns("id");
@@ -63,6 +66,8 @@ public class PostRepositoryV2Impl implements PostRepositoryV2 {
     }
 
     //이 방법은 강제로 순차적으로 증가하는 PRIMARY KEY ID값을 넣어줘야 한다.
+    @Override
+    @Transactional
     public void savePost(Post post) {
         String sql = "insert into post values(?,?,?,?)";
         try {
@@ -74,6 +79,7 @@ public class PostRepositoryV2Impl implements PostRepositoryV2 {
     }
 
     @Override
+    @Transactional
     public void update(Long id, String author, String content, String title) {
         String sql = "update post set author=?, content=?, title=? where id=?";
         try {
@@ -84,6 +90,7 @@ public class PostRepositoryV2Impl implements PostRepositoryV2 {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         String sql = "delete from post where id=?";
         try {
