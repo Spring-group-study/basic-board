@@ -43,6 +43,8 @@ public class PostRepositoryV2Impl implements PostRepositoryV2 {
         return query.isEmpty() ? null : query.get(0);
     }
 
+    // JDBC Core에서 제공하는 SimpleJdbcInsert메서드를 사용해서
+    // HashMap에 데이터를 담아 jdbcInsert로 db Insert query를 생성한다.
     @Override
     public void save(Post post) {
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
@@ -90,7 +92,7 @@ public class PostRepositoryV2Impl implements PostRepositoryV2 {
             throw new IllegalStateException(e);
         }
     }
-
+    // table Row와 데이터를 매핑해준다.
     static class PostMapper implements RowMapper<Post> {
         @Override
         public Post mapRow(ResultSet rs, int rowNum) throws SQLException {
