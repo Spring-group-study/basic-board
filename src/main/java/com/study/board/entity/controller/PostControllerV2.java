@@ -62,15 +62,6 @@ public class PostControllerV2 {
         return "redirect:/home";
     }
 
-    @PostConstruct
-    public void init() {
-        for (int i = 0; i <6; i++){
-            String title = "제목" + i;
-            String author = "작성자" + i;
-            String content = "내용" + i;
-            Post post = new Post();
-            post.toEntity(author,title,content);
-            postServiceV2.savePost(post);
-        }
-    }
+    /*@PostConstruct
+    */
 }
