@@ -7,7 +7,7 @@ import java.util.List;
 public interface PostRepositoryV2 {
     List<Post> findAll();
     Post findById(Long id);
-    void save(Post post);
+    Long save(Post post);
 
     void savePost(Post post);
 

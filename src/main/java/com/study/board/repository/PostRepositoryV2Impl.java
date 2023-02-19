@@ -49,7 +49,7 @@ public class PostRepositoryV2Impl implements PostRepositoryV2 {
     // HashMap에 데이터를 담아 jdbcInsert로 db Insert query를 생성한다.
     @Override
     @Transactional
-    public void save(Post post) {
+    public Long save(Post post) {
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         jdbcInsert.withTableName("post").usingGeneratedKeyColumns("id");
         try {
@@ -63,6 +63,7 @@ public class PostRepositoryV2Impl implements PostRepositoryV2 {
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
+        return post.getId();
     }
 
     //이 방법은 강제로 순차적으로 증가하는 PRIMARY KEY ID값을 넣어줘야 한다.

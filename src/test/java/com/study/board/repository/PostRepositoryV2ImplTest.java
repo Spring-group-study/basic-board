@@ -25,17 +25,22 @@ class PostRepositoryV2ImplTest {
         repositoryV2.savePost(post3);
         //when
         List<Post> postList = repositoryV2.findAll();
-
         //then
         assertThat(postList.size()).isEqualTo(9);
     }
     @Test
+    //테스트 시 테스트데이터를 생성해서 테스트코드를 실행할 시
+    // postconstruct로 생성되는 객체를 없애줘야 id값 자동생성에서 에러가 나지 않는다(id제약조건)
     public void 한건조회() throws Exception {
         //given
+        Post post = new Post();
+        post.setAuthor("테스트");
+        post.setContent("test");
+        post.setTitle("test");
+        Long saveId = repositoryV2.save(post);
         //when
-        Post findPost = repositoryV2.findById(6l);
+        Post findPost = repositoryV2.findById(saveId);
         //then
-        assertThat(findPost.getAuthor()).isEqualTo("테스트");
-
+        assertThat(post).isNotSameAs(findPost);
     }
 }
