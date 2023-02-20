@@ -1,6 +1,7 @@
 package com.study.board.repository;
 
 import com.study.board.entity.Post;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,6 +15,5 @@ public interface PostRepositoryV2 {
     void update(Long id, String author, String content, String title);
 
     void delete(Long id);
-
-
+    void deleteAll();
 }

@@ -100,6 +100,14 @@ public class PostRepositoryV2Impl implements PostRepositoryV2 {
             throw new IllegalStateException(e);
         }
     }
+
+    @Override
+    @Transactional
+    public void deleteAll() {
+        String sql = "delete from post";
+        jdbcTemplate.update(sql);
+    }
+
     // table Row와 데이터를 매핑해준다.
     static class PostMapper implements RowMapper<Post> {
         @Override
