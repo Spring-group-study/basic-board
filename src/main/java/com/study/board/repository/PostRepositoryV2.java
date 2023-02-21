@@ -1,7 +1,6 @@
 package com.study.board.repository;
 
 import com.study.board.entity.Post;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

@@ -37,7 +37,9 @@ public class dbInit {
             String content = "내용" + i;
             Post post = new Post();
             post.toEntity(author, title, content);
+            System.out.println("--------------------저장시작---------------");
             postServiceV2.savePost(post);
+            System.out.println("--------------------저장완료---------------");
         }
     }
 }
