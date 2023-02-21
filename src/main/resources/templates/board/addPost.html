@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+
+        <style>
+            body{
+                text-align:center;
+            }
+
+            .button{
+                position:relative;
+                top:30px;
+            }
+
+            input{
+                position:relative;
+                bottom:5px;
+            }
+
+        </style>
+
+    </head>
+
+    <body>
+        <h3>새 게시물 작성</h3>
+        <form action="addPost.html" th:action th:object="${post}" method="post">
+            <div>
+                <label for="author">작성자: </label>
+                <input type="text" id="author" th:field="*{author}">
+            </div>
+
+            <div>
+                <label for="title">제목: </label>
+                <textarea id="title" th:field="*{title}" rows="1" cols="70"></textarea>
+            </div>
+
+            <div>
+                <textarea th:field="*{content}" rows="50" cols="100"></textarea>
+            </div>
+
+            <button class="button" type="submit">등록하기</button>     <!--리터럴 대체-->
+            <button class="button" type="button" onclick="location.href='main.html'"
+                    th:onclick="|location.href='@{/board/main}'|">목록으로</button>     <!--리터럴 대체-->
+
+            <!--@{---}주소 쓸때 항상 /먼저 붙여야함 -> 자꾸 실수함-->
+
+
+        </form>
+
+    </body>
+</html>

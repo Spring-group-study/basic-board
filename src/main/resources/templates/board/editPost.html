@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+
+    <style>
+            body{
+                text-align:center;
+            }
+
+            .button{
+                position:relative;
+                top:30px;
+            }
+
+            input{
+                position:relative;
+                bottom:5px;
+            }
+
+        </style>
+
+</head>
+
+<body>
+<h3>게시물 수정</h3>
+<form action="post/write" th:action th:object="${post}" method="post">
+    <div>
+        <label for="author">작성자: </label>
+        <input type="text" id="author" th:field="*{author}" readonly>
+    </div>
+
+    <div>
+        <label for="title">제목: </label>
+        <textarea id="title" th:field="*{title}" rows="1" cols="70"></textarea>
+    </div>
+
+    <div>
+        <textarea th:field="*{content}" rows="50" cols="100"></textarea>
+    </div>
+
+    <button class="button" type="submit" onclick="location.href='main'"
+            th:onclick="|location,href='@{board/post/{id} (id=$post.postId)'|">수정완료</button>     <!--리터럴 대체-->
+
+</form>
+
+</body>
+</html>
