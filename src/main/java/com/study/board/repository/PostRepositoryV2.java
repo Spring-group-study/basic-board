@@ -8,7 +8,7 @@ import java.util.List;
 //DTO 적용
 public interface PostRepositoryV2 {
 
-    public Post save(PostDto dto);
+    public Long save(PostDto dto);
 
     public Post findById(Long id);
 
