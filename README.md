@@ -70,3 +70,13 @@
 
 <br>
 <br>
+
+<hr>
+
+#### 3주차 요구사항
+
+- <u> DB연동한 게시판에 Validation추가하고 Pagination하기 </u>
+- Validation은 Spring Validation 사용
+- Pagination 해서 view에서 확인
+- 기존 v2에서 이어서 구현
+- 부족한 부분 리팩토링 하기

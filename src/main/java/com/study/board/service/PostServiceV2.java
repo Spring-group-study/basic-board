@@ -16,7 +16,7 @@ public class PostServiceV2 {
         this.postRepository = postRepository;
     }
 
-    public Post save(PostDto dto) {
+    public Long save(PostDto dto) {
         return postRepository.save(dto);
     }
 

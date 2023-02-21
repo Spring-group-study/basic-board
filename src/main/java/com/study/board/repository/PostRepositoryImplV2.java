@@ -5,10 +5,15 @@ import com.study.board.entity.Post;
 import com.study.board.mapper.MapperV2;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 
 /**
  * PostDto 적용
@@ -27,11 +32,20 @@ public class PostRepositoryImplV2 implements PostRepositoryV2 {
     private MapperV2 mapper = new MapperV2();
 
     @Override
-    public Post save(PostDto dto) {
+    public Long save(PostDto dto) {
         Post post = mapper.SaveDtoToEntity(dto);
-        String sql = "insert into post(author,title,content) values (?,?,?)";
-        template.update(sql, post.getAuthor(), post.getTitle(), post.getContent());
-        return post;
+        SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(template);
+        jdbcInsert.withTableName("post").usingGeneratedKeyColumns("post_id");
+
+        Map<String, String> data = new HashMap<>();
+        data.put("author", post.getAuthor());
+        data.put("title", post.getTitle());
+        data.put("content", post.getContent());
+
+        Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(data));
+        post.setPostId(key.longValue());
+
+        return post.getPostId();
     }
 
     @Override

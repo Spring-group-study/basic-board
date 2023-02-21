@@ -17,12 +17,9 @@ import java.util.List;
 @RequestMapping("/board")
 public class PostControllerV2 {
 
-    private final PostRepositoryV2 postRepositoryV2;
     private final PostServiceV2 postServiceV2;
 
-    @Autowired
-    public PostControllerV2(PostRepositoryV2 postRepositoryV2, PostServiceV2 postServiceV2) {
-        this.postRepositoryV2 = postRepositoryV2;
+    public PostControllerV2(PostServiceV2 postServiceV2) {
         this.postServiceV2 = postServiceV2;
     }
 
@@ -52,15 +49,14 @@ public class PostControllerV2 {
 
     /**
      * 질문 : Post savedPost = postServiceV2.save(dto); 이후에 savedPost.getPostId()가 null이 나와서 오류페이지가 뜸...
-     *
+     * -> SimpleJdbcInsert 사용
      */
     //게시글 등록버튼 누를시 단일게시글 페이지로 redirect -> 새로고침시 게시글 중복등록 막기위함
     @PostMapping("/addPost")
     public String addPost(@ModelAttribute PostDto dto, RedirectAttributes redirectAttributes) {
-        Post savedPost = postServiceV2.save(dto);
-        System.out.println("savedPost.getPostId() = " + savedPost.getPostId());     //null나옴
+        Long savedPostId = postServiceV2.save(dto);
 
-        redirectAttributes.addAttribute("id", savedPost.getPostId());
+        redirectAttributes.addAttribute("id", savedPostId);
         redirectAttributes.addAttribute("status", true);
         return "redirect:/board/post/{id}";
     }
@@ -74,7 +70,7 @@ public class PostControllerV2 {
     }
 
     //게시글 수정버튼 누를 시 단일 게시글 페이지로 이동
-    @PostMapping("/post/{id}/editPost")     //dto적용할것
+    @PostMapping("/post/{id}/editPost")
     public String editPost(@PathVariable Long id, @ModelAttribute PostDto updateParam) {
         Post pastPost = postServiceV2.findById(id);
         postServiceV2.update(pastPost,updateParam);
