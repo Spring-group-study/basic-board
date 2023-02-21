@@ -70,7 +70,7 @@ public class PostControllerV2 {
     }
 
     //게시글 수정버튼 누를 시 단일 게시글 페이지로 이동
-    @PostMapping("/post/{id}/editPost")     //dto적용할것
+    @PostMapping("/post/{id}/editPost")
     public String editPost(@PathVariable Long id, @ModelAttribute PostDto updateParam) {
         Post pastPost = postServiceV2.findById(id);
         postServiceV2.update(pastPost,updateParam);
