@@ -7,6 +7,11 @@ import java.util.List;
 public interface PostServiceV2 {
 
     List<Post> getAllPost();
+
+    List<Post> getAllPostByPage(int pageNumber);
+
+    int getAllPostCount();
+
     Post getOnePost(Long id);
     void savePost(Post post);
 

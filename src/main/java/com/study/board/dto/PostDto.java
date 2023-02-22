@@ -1,14 +1,17 @@
-package com.study.board.entity;
+package com.study.board.dto;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-@Configuration
-public class Post {
+public class PostDto {
     private Long id;
     private String author;
     private String title;
     private String content;
+
+    public PostDto(Long id, String author, String title, String content) {
+        this.id = id;
+        this.author = author;
+        this.title = title;
+        this.content = content;
+    }
 
     public Long getId() {
         return id;
@@ -39,22 +42,6 @@ public class Post {
     }
 
     public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Post() {
-
-    }
-
-    public Post(Long id, String author, String title, String content) {
-        this.id = id;
-        this.author = author;
-        this.title = title;
-        this.content = content;
-    }
-    public void toEntity(String author, String title, String content){
-        this.author = author;
-        this.title = title;
         this.content = content;
     }
 }
