@@ -1,7 +1,6 @@
 package com.study.board.service;
 
 import com.study.board.entity.Post;
-import com.study.board.repository.PostRepositoryV1;
 import com.study.board.repository.PostRepositoryV2;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +20,19 @@ public class PostServiceV2Impl implements PostServiceV2 {
     public List<Post> getAllPost() {
         List<Post> posts = repository.findAll();
         return posts;
+    }
+
+    @Override
+    public List<Post> getAllPostByPage(int pageNumber) {
+        List<Post> allByPage = repository.findAllByPage(pageNumber);
+        return allByPage;
+    }
+
+    //생성해야 할 페이지 수 리턴
+    @Override
+    public int getAllPostCount() {
+        int allPostCount = repository.findAllPostCount();
+        return (allPostCount/5)+1;
     }
 
     @Override

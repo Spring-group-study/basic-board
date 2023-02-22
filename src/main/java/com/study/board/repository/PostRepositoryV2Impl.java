@@ -39,6 +39,28 @@ public class PostRepositoryV2Impl implements PostRepositoryV2 {
     }
 
     @Override
+    public List<Post> findAllByPage(int pageNumber) {
+        String sql = "select * from post order by id limit 5 offset ?";
+
+        switch (pageNumber) {
+            case 0:
+                return jdbcTemplate.query(sql, new PostMapper(), 0);
+            case 1:
+                return jdbcTemplate.query(sql, new PostMapper(), 5);
+            case 2:
+                return jdbcTemplate.query(sql, new PostMapper(),10);
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public int findAllPostCount() {
+        String sql = "select count(*) from post";
+        return jdbcTemplate.queryForObject(sql, Integer.class);
+    }
+
+    @Override
     public Post findById(Long id) {
         String sql = "select * from post where id=?";
         List<Post> query = jdbcTemplate.query(sql, new PostMapper(), id);
