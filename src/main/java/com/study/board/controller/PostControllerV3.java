@@ -2,32 +2,31 @@ package com.study.board.controller;
 
 import com.study.board.dto.PostDto;
 import com.study.board.entity.Post;
-import com.study.board.repository.PostRepositoryV2;
-import com.study.board.service.PostServiceV2;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.study.board.service.PostServiceV3;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
-//@Controller
+@Controller
 @RequestMapping("/board")
-public class PostControllerV2 {
+public class PostControllerV3 {     //validation 구현
 
-    private final PostServiceV2 postServiceV2;
+    private final PostServiceV3 postServiceV3;
 
-    public PostControllerV2(PostServiceV2 postServiceV2) {
-        this.postServiceV2 = postServiceV2;
+    public PostControllerV3(PostServiceV3 postServiceV3) {
+        this.postServiceV3 = postServiceV3;
     }
 
 
     //게시판 메인
     @GetMapping("/main")
     public String posts(Model model) {
-        List<Post> posts = postServiceV2.findAll();
+        List<Post> posts = postServiceV3.findAll();
         model.addAttribute("posts", posts);
         return "/board/main";
     }
@@ -35,7 +34,7 @@ public class PostControllerV2 {
     //단일 게시글
     @GetMapping("/post/{id}")
     public String post(@PathVariable Long id, Model model) {
-        Post post = postServiceV2.findById(id);
+        Post post = postServiceV3.findById(id);
         model.addAttribute("post", post);
         return "/board/post";
     }
@@ -48,13 +47,21 @@ public class PostControllerV2 {
     }
 
     /**
-     * 질문 : Post savedPost = postServiceV2.save(dto); 이후에 savedPost.getPostId()가 null이 나와서 오류페이지가 뜸...
+     * 질문 : Post savedPost = postServiceV3.save(dto); 이후에 savedPost.getPostId()가 null이 나와서 오류페이지가 뜸...
      * -> SimpleJdbcInsert 사용
      */
     //게시글 등록버튼 누를시 단일게시글 페이지로 redirect -> 새로고침시 게시글 중복등록 막기위함
     @PostMapping("/addPost")
-    public String addPost(@ModelAttribute PostDto dto, RedirectAttributes redirectAttributes) {
-        Long savedPostId = postServiceV2.save(dto);
+    public String addPost(@Validated @ModelAttribute PostDto postDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+        //validation
+        if (bindingResult.hasErrors()) {
+            System.out.println("errors = "+ bindingResult);
+            return "/board/addPost";
+        }
+
+        //성공로직
+        Long savedPostId = postServiceV3.save(postDto);
 
         redirectAttributes.addAttribute("id", savedPostId);
         redirectAttributes.addAttribute("status", true);
@@ -64,16 +71,21 @@ public class PostControllerV2 {
     //게시글 수정
     @GetMapping("/post/{id}/editPost")
     public String editPost(@PathVariable Long id,Model model) {
-        Post post = postServiceV2.findById(id);
+        Post post = postServiceV3.findById(id);
         model.addAttribute("post", post);
         return "/board/editPost";
     }
 
     //게시글 수정버튼 누를 시 단일 게시글 페이지로 이동
     @PostMapping("/post/{id}/editPost")
-    public String editPost(@PathVariable Long id, @ModelAttribute PostDto updateParam) {
-        Post pastPost = postServiceV2.findById(id);
-        postServiceV2.update(pastPost,updateParam);
+    public String editPost(@PathVariable Long id, @Validated @ModelAttribute PostDto updateParam, BindingResult bindingResult) {
+        Post pastPost = postServiceV3.findById(id);
+
+        if (bindingResult.hasErrors()) {
+            return "/board/editPost";
+        }
+
+        postServiceV3.update(pastPost,updateParam);
         return "redirect:/board/post/{id}";
     }
 
@@ -86,7 +98,7 @@ public class PostControllerV2 {
             String author = "author" + i;
             String title = "title" + i;
             String content = "content" + i;
-            postServiceV2.save(new PostDto(author, title, content));
+            postServiceV3.save(new PostDto(author, title, content));
         }
     }*/
 

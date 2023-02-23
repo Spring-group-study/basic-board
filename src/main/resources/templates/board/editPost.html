@@ -33,10 +33,18 @@
     <div>
         <label for="title">제목: </label>
         <textarea id="title" th:field="*{title}" rows="1" cols="70"></textarea>
+
+        <div th:errors="*{title}">
+            제목오류
+        </div>
     </div>
 
     <div>
         <textarea th:field="*{content}" rows="50" cols="100"></textarea>
+    </div>
+
+    <div th:errors="*{content}">
+        내용오류
     </div>
 
     <button class="button" type="submit" onclick="location.href='main'"
