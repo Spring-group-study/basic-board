@@ -5,7 +5,6 @@ import com.study.board.entity.Post;
 
 import java.util.List;
 
-//DTO 적용
 public interface PostRepositoryV3 {
 
     public Long save(PostDto dto);
@@ -14,9 +13,13 @@ public interface PostRepositoryV3 {
 
     public List<Post> findAll();
 
+    public int postCnt();
+
     public Post update(Post post, PostDto updateParam);
 
     public void delete(Long id);
 
     public void clear();
+
+
 }

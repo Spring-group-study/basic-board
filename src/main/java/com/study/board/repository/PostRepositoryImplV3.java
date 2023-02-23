@@ -65,31 +65,18 @@ public class PostRepositoryImplV3 implements PostRepositoryV3 {
     }
 
 
-    //findAll (1) : 메서드 따로 빼서 구현 -> 제일 깔끔
     @Override
     public List<Post> findAll() {
         String sql = "select * from post";
         return template.query(sql, postRowMapper());    //위 메서드 이용
     }
 
-
-    //findAll (2) : 익명클래스 이용
-    /**
     @Override
-    public List<PostV2> findAll() {
-        String sql = "select * from post";
-        return template.query(sql, new RowMapper<PostV2>() {
-            @Override
-            public PostV2 mapRow(ResultSet rs, int rowNum) throws SQLException {
-                PostV2 post = new PostV2(rs.getString("author"),
-                        rs.getString("title"),
-                        rs.getString("content"));
-                post.setPostId(rs.getLong("post_id"));
-                return post;
-            }
-        });
+    public int postCnt() {
+        return findAll().size();
     }
-    */
+
+
 
     @Override
     public Post update(Post post, PostDto updateParam) {

@@ -1,5 +1,6 @@
 package com.study.board.dto;
 
+
 import javax.validation.constraints.NotBlank;
 
 public class PostDto {

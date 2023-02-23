@@ -46,11 +46,7 @@ public class PostControllerV3 {     //validation 구현
         return "/board/addPost";
     }
 
-    /**
-     * 질문 : Post savedPost = postServiceV3.save(dto); 이후에 savedPost.getPostId()가 null이 나와서 오류페이지가 뜸...
-     * -> SimpleJdbcInsert 사용
-     */
-    //게시글 등록버튼 누를시 단일게시글 페이지로 redirect -> 새로고침시 게시글 중복등록 막기위함
+
     @PostMapping("/addPost")
     public String addPost(@Validated @ModelAttribute PostDto postDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
