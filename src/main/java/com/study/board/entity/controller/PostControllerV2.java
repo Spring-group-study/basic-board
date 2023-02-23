@@ -7,8 +7,10 @@ import com.study.board.service.PostServiceV1;
 import com.study.board.service.PostServiceV2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -42,7 +44,7 @@ public class PostControllerV2 {
         List<Post> allPostPage = postServiceV2.getAllPostByPage(0);
         List<PostDto> collect = allPostPage.stream().map(a -> new PostDto(a.getId(), a.getAuthor(), a.getTitle(), a.getContent())).collect(Collectors.toList());
         int postCount = postServiceV2.getAllPostCount();
-        model.addAttribute("pageData",postCount);
+        model.addAttribute("pageData", postCount);
 
         model.addAttribute("form", collect);
         return "/postListPageV2";
@@ -57,14 +59,18 @@ public class PostControllerV2 {
 
     @GetMapping("/posts/new")
     public String createPost(Model model) {
-        model.addAttribute("form",new Post());
+        model.addAttribute("form", new Post());
         return "/newPostV2";
     }
 
     @PostMapping("/posts/new")
-    public String createPost(@ModelAttribute("form") Post post) {
+    public String createPost(@ModelAttribute("form") @Valid PostDto dto, BindingResult result) {
+        if (result.hasErrors()) {
+            return "/posts/new";
+        }else {
+        Post post = new Post(dto.getId(), dto.getAuthor(), dto.getTitle(), dto.getContent());
         postServiceV2.savePost(post);
-        return "redirect:/home";
+        return "redirect:/home";}
     }
 
     @GetMapping("/post/delete/{postId}")
@@ -82,10 +88,10 @@ public class PostControllerV2 {
 
     @PostMapping("/post/update")
     public String updatePost(@ModelAttribute Post post) {
-        postServiceV2.updatePost(post.getId(), post.getAuthor(),post.getContent(),post.getTitle());
+        postServiceV2.updatePost(post.getId(), post.getAuthor(), post.getContent(), post.getTitle());
         return "redirect:/home";
     }
 
     /*@PostConstruct
-    */
+     */
 }
