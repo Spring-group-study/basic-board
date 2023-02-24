@@ -3,6 +3,7 @@ package com.study.board.repository;
 import com.study.board.dto.PostDto;
 import com.study.board.entity.Post;
 import com.study.board.mapper.MapperV2;
+import com.study.board.paging.Pagination;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -75,8 +76,6 @@ public class PostRepositoryImplV3 implements PostRepositoryV3 {
     public int postCnt() {
         return findAll().size();
     }
-
-
 
     @Override
     public Post update(Post post, PostDto updateParam) {

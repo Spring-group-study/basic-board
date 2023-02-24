@@ -2,6 +2,7 @@ package com.study.board.controller;
 
 import com.study.board.dto.PostDto;
 import com.study.board.entity.Post;
+import com.study.board.paging.Pagination;
 import com.study.board.service.PostServiceV3;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,16 +19,21 @@ public class PostControllerV3 {     //validation 구현
 
     private final PostServiceV3 postServiceV3;
 
+    final int POST_CNT_PER_PAGE = 5;
+    final int PAGE_CNT_PER_BLOCK = 5;
+
     public PostControllerV3(PostServiceV3 postServiceV3) {
         this.postServiceV3 = postServiceV3;
     }
 
 
     //게시판 메인
-    @GetMapping("/main")
-    public String posts(Model model) {
+    @GetMapping("/main/{page}")
+    public String posts(@PathVariable int page, Model model) {
+        Pagination pagination = new Pagination(postServiceV3.postCnt(), page, POST_CNT_PER_PAGE, PAGE_CNT_PER_BLOCK);
         List<Post> posts = postServiceV3.findAll();
         model.addAttribute("posts", posts);
+        model.addAttribute()
         return "/board/main";
     }
 

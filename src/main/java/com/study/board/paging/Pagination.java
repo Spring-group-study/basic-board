@@ -1,6 +1,10 @@
 package com.study.board.paging;
 
 
+import com.study.board.entity.Post;
+
+import java.util.ArrayList;
+
 public class Pagination {
 
     private int currentPage;
@@ -38,6 +42,12 @@ public class Pagination {
 
         existNextPage = (endPage * postCntPerPage) < totalPostCount;
 
+    }
+
+    public ArrayList<Integer> pagesToList() {
+        for (int i = 1; i <= totalPageCount; i++) {
+
+        }
     }
 
 
