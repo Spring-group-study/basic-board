@@ -1,5 +1,6 @@
 package com.study.board.paging;
 
+
 public class Pagination {
 
     private int currentPage;
@@ -38,4 +39,6 @@ public class Pagination {
         existNextPage = (endPage * postCntPerPage) < totalPostCount;
 
     }
+
+
 }
