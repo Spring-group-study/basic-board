@@ -55,7 +55,7 @@ public class PostControllerV3 {     //validation 구현
 
 
     @PostMapping("/addPost")
-    public String addPost(@Validated @ModelAttribute PostDto postDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String addPost(@Validated @ModelAttribute("post") PostDto postDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         //validation
         if (bindingResult.hasErrors()) {
@@ -81,10 +81,11 @@ public class PostControllerV3 {     //validation 구현
 
     //게시글 수정버튼 누를 시 단일 게시글 페이지로 이동
     @PostMapping("/post/{id}/editPost")
-    public String editPost(@PathVariable Long id, @Validated @ModelAttribute PostDto updateParam, BindingResult bindingResult) {
+    public String editPost(@PathVariable Long id, @Validated @ModelAttribute("post") PostDto updateParam, BindingResult bindingResult) {
         Post pastPost = postServiceV3.findById(id);
 
         if (bindingResult.hasErrors()) {
+            System.out.println("errors= "+bindingResult);
             return "/board/editPost";
         }
 
