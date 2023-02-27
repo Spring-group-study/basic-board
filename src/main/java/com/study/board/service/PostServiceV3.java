@@ -2,6 +2,7 @@ package com.study.board.service;
 
 import com.study.board.dto.PostDto;
 import com.study.board.entity.Post;
+import com.study.board.paging.Pagination;
 import com.study.board.repository.PostRepositoryV2;
 import com.study.board.repository.PostRepositoryV3;
 import org.springframework.stereotype.Service;
@@ -35,5 +36,11 @@ public class PostServiceV3 {
 
     public Post update(Post post, PostDto updateParam) {
         return postRepository.update(post, updateParam);
+    }
+
+    public List<Post> pagedFindAll(Pagination pagination) {
+
+        return postRepository.pagedFindAll(pagination);
+
     }
 }

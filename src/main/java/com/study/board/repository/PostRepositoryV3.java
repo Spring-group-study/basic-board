@@ -2,6 +2,7 @@ package com.study.board.repository;
 
 import com.study.board.dto.PostDto;
 import com.study.board.entity.Post;
+import com.study.board.paging.Pagination;
 
 import java.util.List;
 
@@ -12,6 +13,8 @@ public interface PostRepositoryV3 {
     public Post findById(Long id);
 
     public List<Post> findAll();
+
+    public List<Post> pagedFindAll(Pagination pagination);
 
     public int postCnt();
 

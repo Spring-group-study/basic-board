@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Controller
@@ -31,9 +32,9 @@ public class PostControllerV3 {     //validation 구현
     @GetMapping("/main/{page}")
     public String posts(@PathVariable int page, Model model) {
         Pagination pagination = new Pagination(postServiceV3.postCnt(), page, POST_CNT_PER_PAGE, PAGE_CNT_PER_BLOCK);
-        List<Post> posts = postServiceV3.findAll();
-        model.addAttribute("posts", posts);
-        model.addAttribute()
+        model.addAttribute("pagination", pagination);
+        model.addAttribute("posts", postServiceV3.pagedFindAll(pagination));
+        model.addAttribute("pagesInCurrentBlock",pagination.pagesInCurrentBlock());
         return "/board/main";
     }
 
@@ -92,16 +93,6 @@ public class PostControllerV3 {     //validation 구현
     }
 
 
-    //테스트용(초기 데이터)
-    //@PostConstruct가 schema.sql이랑 문제가 있는거같음... 일단 이건 주석처리 하고 schema.sql에 insert문 10개 추가함
-    /*@PostConstruct
-    public void init() {
-        for (int i = 1; i <= 20; i++) {
-            String author = "author" + i;
-            String title = "title" + i;
-            String content = "content" + i;
-            postServiceV3.save(new PostDto(author, title, content));
-        }
-    }*/
+
 
 }

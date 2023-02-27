@@ -3,6 +3,7 @@ package com.study.board.repository;
 import com.study.board.dto.PostDto;
 import com.study.board.entity.Post;
 import com.study.board.mapper.MapperV2;
+import com.study.board.mapper.MapperV3;
 import com.study.board.paging.Pagination;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -11,6 +12,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +32,7 @@ public class PostRepositoryImplV3 implements PostRepositoryV3 {
         this.template = new JdbcTemplate(dataSource);
     }
 
-    private MapperV2 mapper = new MapperV2();
+    private MapperV3 mapper = new MapperV3();
 
     @Override
     public Long save(PostDto dto) {
@@ -73,6 +75,13 @@ public class PostRepositoryImplV3 implements PostRepositoryV3 {
     }
 
     @Override
+    public List<Post> pagedFindAll(Pagination pagination) {
+        String sql = "select * from post Limit ?,?";
+        return template.query(sql, postRowMapper(), pagination.limitStart, pagination.postCntPerPage);
+
+    }
+
+    @Override
     public int postCnt() {
         return findAll().size();
     }
@@ -97,3 +106,6 @@ public class PostRepositoryImplV3 implements PostRepositoryV3 {
         String sql = "delete from post";
     }
 }
+
+
+
