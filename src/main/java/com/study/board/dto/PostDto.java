@@ -1,9 +1,17 @@
 package com.study.board.dto;
 
+
+import javax.validation.constraints.NotBlank;
+
 public class PostDto {
 
+    @NotBlank
     private String author;
+
+    @NotBlank
     private String title;
+
+    @NotBlank
     private String content;
 
     public PostDto() {

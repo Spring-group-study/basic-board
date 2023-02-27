@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.annotation.PostConstruct;
 import java.util.List;
 
-@Controller
+//@Controller
 @RequestMapping("/board")
 public class PostControllerV2 {
 
@@ -79,10 +79,15 @@ public class PostControllerV2 {
 
 
     //테스트용(초기 데이터)
-    @PostConstruct
+    //@PostConstruct가 schema.sql이랑 문제가 있는거같음... 일단 이건 주석처리 하고 schema.sql에 insert문 10개 추가함
+    /*@PostConstruct
     public void init() {
-        postServiceV2.save(new PostDto("김현수", "테스트제목1", "테스트내용1"));
-        postServiceV2.save(new PostDto("김현승", "테스트제목2", "테스트내용2"));
-    }
+        for (int i = 1; i <= 20; i++) {
+            String author = "author" + i;
+            String title = "title" + i;
+            String content = "content" + i;
+            postServiceV2.save(new PostDto(author, title, content));
+        }
+    }*/
 
 }

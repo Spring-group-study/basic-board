@@ -2,51 +2,53 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8">
-
-        <style>
-            body{
-                text-align:center;
-            }
-
-            .button{
-                position:relative;
-                top:30px;
-            }
-
-            input{
-                position:relative;
-                bottom:5px;
-            }
-
-        </style>
-
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
 
+
     <body>
-        <h3>새 게시물 작성</h3>
-        <form action="addPost.html" th:action th:object="${post}" method="post">
-            <div>
-                <label for="author">작성자: </label>
-                <input type="text" id="author" th:field="*{author}">
-            </div>
+        <div class="container">
+        <h3 class="text-center">새 게시물 작성</h3>
 
-            <div>
-                <label for="title">제목: </label>
-                <textarea id="title" th:field="*{title}" rows="1" cols="70"></textarea>
-            </div>
+            <form action="addPost.html" th:action th:object="${post}" method="post">
+                <div class="col-md-6 offset-md-2">
+                    <div>
+                        <label for="author">작성자: </label>
+                        <input type="text" id="author" th:field="*{author}">
 
-            <div>
-                <textarea th:field="*{content}" rows="50" cols="100"></textarea>
-            </div>
+                        <div th:errors="*{author}">
+                            작성자 오류
+                        </div>
+                    </div>
 
-            <button class="button" type="submit">등록하기</button>     <!--리터럴 대체-->
-            <button class="button" type="button" onclick="location.href='main.html'"
-                    th:onclick="|location.href='@{/board/main}'|">목록으로</button>     <!--리터럴 대체-->
+                    <div>
+                        <label for="title">제목: </label>
+                        <textarea id="title" th:field="*{title}" rows="1" cols="70"></textarea>
 
-            <!--@{---}주소 쓸때 항상 /먼저 붙여야함 -> 자꾸 실수함-->
+                        <div th:errors="*{title}">
+                            제목 오류
+                        </div>
+                    </div>
+
+                    <div>
+                        <textarea th:field="*{content}" rows="50" cols="100"></textarea>
+
+                        <div th:errors="*{content}">
+                            내용 오류
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+                    <button class="btn btn-primary offset-md-4" type="submit">등록하기</button>     <!--리터럴 대체-->
+                    <button class="btn btn-primary " type="button" onclick="location.href='main.html'"
+                            th:onclick="|location.href='@{/board/main}'|">목록으로</button>     <!--리터럴 대체-->
+
+                    <!--@{---}주소 쓸때 항상 /먼저 붙여야함 -> 자꾸 실수함-->
+            </form>
 
 
-        </form>
-
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
