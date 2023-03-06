@@ -104,6 +104,7 @@ public class PostRepositoryImplV3 implements PostRepositoryV3 {
     @Override
     public void clear() {
         String sql = "delete from post";
+        template.execute(sql);
     }
 }
 

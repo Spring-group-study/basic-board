@@ -8,16 +8,16 @@ import java.util.List;
 
 public class Pagination {
 
-    public static int currentPage;
-    public int totalPostCount;
-    public int totalPageCount;
-    public int postCntPerPage;
-    public int pageCntPerBlock;
-    public int startPage;
-    public int endPage;
-    public int limitStart;
-    public boolean existPrePage;
-    public boolean existNextPage;
+    public static int currentPage;      //현재페이지 (param으로 받음)
+    public int totalPostCount;          //총 게시글 갯수
+    public int totalPageCount;          //총 페이지 갯수
+    public int postCntPerPage;          //한 페이지당 게시글 갯수
+    public int pageCntPerBlock;         //한 블럭당 페이지 갯수
+    public int startPage;               //블럭에서의 시작페이지
+    public int endPage;                 //블럭에서의 마지막 페이지
+    public int limitStart;              //쿼리문에서 limit 숫자
+    public boolean existPrePage;        //이전블럭 존재여부
+    public boolean existNextPage;       //다음블럭 존재여부
 
 
     public Pagination(int totalPostCount, int currentPage, int postCntPerPage, int pageCntPerBlock) {
@@ -63,7 +63,7 @@ public class Pagination {
         }
         return list;
     }
-
+/*
     public List<Boolean> preNextBoolean() {
         List<Boolean> list = new ArrayList<>();
         list.add(existPrePage);
@@ -79,6 +79,7 @@ public class Pagination {
         list.add(nextPageStart);
         return list;
     }
+*/
 
 
 
