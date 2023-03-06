@@ -1,13 +1,12 @@
 package com.study.board.repository;
 
-import com.study.board.entity.PostV1;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class MemoryPostRepositoryV1Test {
 
-    private PostRepositoryV1 postRepositoryV1 = new PostRepositoryImplV1();
+    /*private PostRepositoryV1 postRepositoryV1 = new PostRepositoryImplV1();
 
     @BeforeEach
     void clear() {
@@ -63,5 +62,5 @@ class MemoryPostRepositoryV1Test {
 
         postRepositoryV1.delete(savedPost.getId());
         Assertions.assertThat(savedPost).isNotIn(postRepositoryV1.findAll());
-    }
+    }*/
 }

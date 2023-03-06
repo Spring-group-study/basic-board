@@ -3,6 +3,7 @@ package com.study.board.controller;
 import com.study.board.dto.PostDto;
 import com.study.board.entity.Post;
 import com.study.board.paging.Pagination;
+import com.study.board.paging.PagingConst;
 import com.study.board.service.PostServiceV3;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,27 +12,25 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.annotation.PostConstruct;
-import java.util.List;
-
 @Controller
 @RequestMapping("/board")
+
 public class PostControllerV3 {     //validation 구현
 
     private final PostServiceV3 postServiceV3;
+    private final PagingConst pConst;
 
-    final int POST_CNT_PER_PAGE = 5;
-    final int PAGE_CNT_PER_BLOCK = 5;
-
-    public PostControllerV3(PostServiceV3 postServiceV3) {
+    public PostControllerV3(PostServiceV3 postServiceV3,PagingConst pConst) {
         this.postServiceV3 = postServiceV3;
+        this.pConst = pConst;
     }
 
 
     //게시판 메인
     @GetMapping("/main/{page}")
     public String posts(@PathVariable int page, Model model) {
-        Pagination pagination = new Pagination(postServiceV3.postCnt(), page, POST_CNT_PER_PAGE, PAGE_CNT_PER_BLOCK);
+        //페이징 구현
+        Pagination pagination = new Pagination(postServiceV3.postCnt(), page, pConst.getPOST_CNT_PER_PAGE(), pConst.getPAGE_CNT_PER_BLOCK());
         model.addAttribute("pagination", pagination);
         model.addAttribute("posts", postServiceV3.pagedFindAll(pagination));
         model.addAttribute("pagesInCurrentBlock",pagination.pagesInCurrentBlock());
@@ -55,7 +54,9 @@ public class PostControllerV3 {     //validation 구현
 
 
     @PostMapping("/addPost")
-    public String addPost(@Validated @ModelAttribute("post") PostDto postDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String addPost(@Validated @ModelAttribute("post") PostDto postDto,
+                          BindingResult bindingResult,          //BindingResult는 항상 ModelAttribute 바로뒤에 써야함
+                          RedirectAttributes redirectAttributes) {
 
         //validation
         if (bindingResult.hasErrors()) {
@@ -65,7 +66,6 @@ public class PostControllerV3 {     //validation 구현
 
         //성공로직
         Long savedPostId = postServiceV3.save(postDto);
-
         redirectAttributes.addAttribute("id", savedPostId);
         redirectAttributes.addAttribute("status", true);
         return "redirect:/board/post/{id}";
