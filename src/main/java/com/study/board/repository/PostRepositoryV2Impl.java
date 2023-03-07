@@ -43,14 +43,14 @@ public class PostRepositoryV2Impl implements PostRepositoryV2 {
         String sql = "select * from post order by id limit 5 offset ?";
 
         switch (pageNumber) {
-            case 0:
-                return jdbcTemplate.query(sql, new PostMapper(), 0);
             case 1:
                 return jdbcTemplate.query(sql, new PostMapper(), 5);
             case 2:
                 return jdbcTemplate.query(sql, new PostMapper(),10);
+            case 3:
+                return jdbcTemplate.query(sql, new PostMapper(), 15);
             default:
-                return null;
+                return jdbcTemplate.query(sql, new PostMapper(), 0);
         }
     }
 
