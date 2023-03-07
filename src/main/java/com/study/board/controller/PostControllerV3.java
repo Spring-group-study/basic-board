@@ -18,11 +18,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class PostControllerV3 {     //validation 구현
 
     private final PostServiceV3 postServiceV3;
-    private final PagingConst pConst;
+//    private final PagingConst pConst;
 
-    public PostControllerV3(PostServiceV3 postServiceV3,PagingConst pConst) {
+    private final int POST_CNT_PER_PAGE=10;     //한 페이지당 게시글 갯수
+    private final int PAGE_CNT_PER_BLOCK = 5;   //한 블럭당 페이지 갯수
+
+    public PostControllerV3(PostServiceV3 postServiceV3/*, PagingConst pConst*/) {
         this.postServiceV3 = postServiceV3;
-        this.pConst = pConst;
+//        this.pConst = pConst;
     }
 
 
@@ -30,7 +33,7 @@ public class PostControllerV3 {     //validation 구현
     @GetMapping("/main/{page}")
     public String posts(@PathVariable int page, Model model) {
         //페이징 구현
-        Pagination pagination = new Pagination(postServiceV3.postCnt(), page, pConst.getPOST_CNT_PER_PAGE(), pConst.getPAGE_CNT_PER_BLOCK());
+        Pagination pagination = new Pagination(postServiceV3.postCnt(), page, POST_CNT_PER_PAGE, PAGE_CNT_PER_BLOCK);
         model.addAttribute("pagination", pagination);
         model.addAttribute("posts", postServiceV3.pagedFindAll(pagination));
         model.addAttribute("pagesInCurrentBlock",pagination.pagesInCurrentBlock());

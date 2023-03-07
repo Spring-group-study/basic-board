@@ -2,7 +2,9 @@ package com.study.board.config;
 
 import com.study.board.dto.PostDto;
 import com.study.board.service.PostServiceV3;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.event.EventListener;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.annotation.PostConstruct;
@@ -30,7 +32,7 @@ public class Config {
 
 */
 
-    @PostConstruct
+    @EventListener(ApplicationReadyEvent.class)
     public void init() {
         for (int i = 1; i <= 112; i++) {
             String author = "author" + i;
