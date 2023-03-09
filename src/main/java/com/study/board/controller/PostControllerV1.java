@@ -1,4 +1,4 @@
-package com.study.board.entity.controller;
+package com.study.board.controller;
 
 import com.study.board.entity.Post;
 import com.study.board.service.PostServiceV1;
