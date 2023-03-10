@@ -18,13 +18,18 @@ public class LoginController {
         this.loginService = loginService;
     }
 
-    @GetMapping("/login")
-    public String login(Model model) {
-        model.addAttribute("member", new LoginDto());
+    @GetMapping("/")
+    public String homeLogin() {
         return "/login";
     }
 
-    @PostMapping("/login")
+    @GetMapping("/login/new")
+    public String login(Model model) {
+        Model member = model.addAttribute("member", new LoginDto());
+        return "/login";
+    }
+
+    @PostMapping("/login/new")
     public String login(@ModelAttribute LoginDto dto, BindingResult result) {
         if (result.hasErrors()) {
             return "redirect:/login";
