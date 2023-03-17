@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 public class MemberDto {
 
     @NotBlank
-    private String memberId;
+    private String loginId;
 
     @NotBlank
     private String password;
@@ -13,18 +13,21 @@ public class MemberDto {
     @NotBlank
     private String nickname;
 
-    public MemberDto(String memberId, String password, String nickname) {
-        this.memberId = memberId;
+    public MemberDto() {
+    }
+
+    public MemberDto(String loginId, String password, String nickname) {
+        this.loginId = loginId;
         this.password = password;
         this.nickname = nickname;
     }
 
-    public String getMemberId() {
-        return memberId;
+    public String getLoginId() {
+        return loginId;
     }
 
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
     }
 
     public String getPassword() {

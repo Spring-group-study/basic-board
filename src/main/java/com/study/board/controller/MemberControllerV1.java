@@ -10,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.naming.Binding;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -26,40 +28,69 @@ public class MemberControllerV1 {
 
     @GetMapping("/login")
     public String login(Model model) {
-        Member member = new Member();
+        MemberDto member = new MemberDto();
         model.addAttribute("member", member);
-        return "/member/login";
+        return "member/login";
     }
 
-    @PostMapping("login")
-    public String login(@Validated @ModelAttribute MemberDto dto, BindingResult bindingResult,
-                        @RequestParam(defaultValue = "/") String redirectURL, HttpServletRequest request) {
+    @PostMapping("/login")  //문제있음..로그인 버튼 누르면 아무일도 안일어남
+    public String login(@Validated @ModelAttribute("member") MemberDto member, BindingResult bindingResult,
+                        @RequestParam(defaultValue = "/") String requestURI, HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
-            return "/member/login";
+            return "member/login";
         }
-        Member loginMember = memberServiceV1.login(dto.getMemberId(), dto.getPassword());
+        Member loginMember = memberServiceV1.login(member.getLoginId(), member.getPassword());
         if (loginMember == null) {
             bindingResult.reject("loginFailed", "아이디 또는 비밀번호 오류입니다.");
-            return "/member/login";
+            System.out.println("========로그인 실패========");
+            return "member/login";
         }
 
         //로그인 성공시
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
-
-        return "redirect:" + redirectURL;
+        System.out.println("========로그인 성공 : "+loginMember.getLoginId()+"||"+loginMember.getNickname()+"========");
+        return "redirect:"+requestURI;
     }
 
     //로그아웃 구현 필요
 
 
     @GetMapping("/register")
-    public String register() {
-
+    public String register(Model model) {
+        model.addAttribute("member", new MemberDto());
+        return "member/register";
     }
 
     @PostMapping("/register")
-    public String register() {
+    public String register(@Validated @ModelAttribute("member") MemberDto member, BindingResult bindingResult,
+                           RedirectAttributes redirectAttributes, HttpServletRequest request) {
+        if (bindingResult.hasErrors()) {
+            System.out.println("========회원가입 오류========");
+            return "member/register";
+        }
+        Long memberId = memberServiceV1.save(member);
+        Member registerMember = memberServiceV1.findById(memberId);
+        System.out.println("========회원가입 성공========");
 
+        HttpSession session = request.getSession();
+
+        session.setAttribute(SessionConst.LOGIN_MEMBER, registerMember);
+        System.out.println("========로그인 성공 : "+registerMember.getLoginId()+"||"+registerMember.getNickname()+"========");
+
+        session.getAttributeNames().asIterator()
+                .forEachRemaining(name -> System.out.println("session-name = "+name+"   value = "+ session.getAttribute(name)));
+
+        System.out.println("ID= "+memberServiceV1.findById(memberId).getLoginId());
+        redirectAttributes.addAttribute("memberId", memberId);
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/member/individual/{memberId}";
+    }
+
+    @GetMapping("/individual/{memberId}")
+    public String individualPage(@PathVariable Long memberId, Model model) {
+        Member member = memberServiceV1.findById(memberId);
+        model.addAttribute("member", member);
+        return "member/individual";
     }
 }

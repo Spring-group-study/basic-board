@@ -8,6 +8,7 @@ import com.study.board.entity.Post;
 /**
  * 멤버 dto -> 객체 메서드 추가
  */
+
 public class MapperV4 {
     public Post SaveDtoToEntity(PostDto dto) {
         //롬복 추가 후 builder패턴 이용할것
@@ -24,12 +25,12 @@ public class MapperV4 {
     }
 
     public Member SaveDtoToEntity(MemberDto dto) {
-        Member member = new Member(dto.getMemberId(), dto.getPassword(), dto.getNickname());
+        Member member = new Member(dto.getLoginId(), dto.getPassword(), dto.getNickname());
         return member;
     }
 
     public Member updateDtoToEntity(Member member, MemberDto dto) {
-        member.setLoginId(dto.getMemberId());
+        member.setLoginId(dto.getLoginId());
         member.setPassword(dto.getPassword());
         member.setNickname(dto.getNickname());
 

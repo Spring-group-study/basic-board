@@ -4,6 +4,7 @@ import com.study.board.dto.MemberDto;
 import com.study.board.entity.Member;
 import com.study.board.entity.Post;
 import com.study.board.mapper.MapperV4;
+import org.apache.catalina.mapper.Mapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -20,12 +21,12 @@ import java.util.Map;
 public class MemberRepositoryImplV1 implements MemberRepositoryV1 {
 
     private final JdbcTemplate template;
-    private final MapperV4 mapper;
 
-    public MemberRepositoryImplV1(JdbcTemplate template, MapperV4 mapper) {
+    public MemberRepositoryImplV1(JdbcTemplate template) {
         this.template = template;
-        this.mapper = mapper;
     }
+
+    private MapperV4 mapper = new MapperV4();
 
     @Override
     public Long save(MemberDto dto) {

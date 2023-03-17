@@ -1,5 +1,6 @@
 package com.study.board.login.config;
 
+import com.study.board.login.interceptor.LoginInterceptor;
 import com.study.board.login.web.LoginMemberArgumentResolver;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -17,5 +18,9 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoginInterceptor())
+                .order(1)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/", "/member/register", "/member/login","/css/**","/*.ico");
     }
 }
