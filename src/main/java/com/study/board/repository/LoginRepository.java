@@ -1,5 +1,7 @@
 package com.study.board.repository;
 
+import com.study.board.entity.Member;
+
 public interface LoginRepository {
-    String findMember(String checkId, String checkPw);
+    Member findMember(String checkId, String checkPw);
 }

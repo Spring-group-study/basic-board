@@ -14,3 +14,5 @@ create table member (
     password varchar(255),
     primary key (id)
 );
+
+insert into member values (1,'id','pw');

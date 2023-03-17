@@ -8,25 +8,22 @@
 <body>
 <div class="container d-flex justify-content-center">
     <div class="row">
-        <div th:if="${param.error}" class="alert alert-danger">
-            Invalid username and password.
-        </div>
         <div th:if="${param.logout}" class="alert alert-success">
             You have been logged out.
         </div>
     </div>
 
     <div class="row">
-        <form class="form-signin" method="POST" th:object="${member}" th:action="@{/login}">
+        <form class="form-signin" method="POST" th:object="${loginDto}" th:action="@{/login}">
             <p>
                 <label for="username" class="sr-only">Username</label>
-                <input type="text" id="username" name="username" class="form-control"
-                       placeholder="Username" th:form="*{loginId}" required autofocus>
+                <input type="text" id="username" name="loginId" class="form-control"
+                       placeholder="Username" required autofocus>
             </p>
             <p>
                 <label for="password" class="sr-only">Password</label>
-                <input type="password" id="password" name="password" class="form-control"
-                       placeholder="Password" th:form="*{loginPw}" required>
+                <input type="password" id="password" name="loginPw" class="form-control"
+                       placeholder="Password"  required>
             </p>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
         </form>

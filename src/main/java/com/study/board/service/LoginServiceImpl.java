@@ -1,5 +1,6 @@
 package com.study.board.service;
 
+import com.study.board.entity.Member;
 import com.study.board.repository.LoginRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,8 @@ public class LoginServiceImpl implements LoginService{
     }
 
     @Override
-    public String getMember(String checkId, String checkPw) {
+    public Member getMember(String checkId, String checkPw) {
+
         return loginRepository.findMember(checkId,checkPw);
     }
 

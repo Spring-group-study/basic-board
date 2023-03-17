@@ -20,14 +20,10 @@ public class LoginRepositoryImpl implements LoginRepository {
     }
 
     @Override
-    public String findMember(String checkId, String checkPw) {
+    public Member findMember(String checkId, String checkPw) {
         String sql = "SELECT * FROM MEMBER WHERE MEMBER_ID=? AND PASSWORD=?";
         List<Member> members = jdbcTemplate.query(sql, new MemberMapper(), checkId, checkPw);
-        if (members.isEmpty()){
-            return null;
-        }else {
-            return "success";
-        }
+        return members.get(0);
 
     }
 
