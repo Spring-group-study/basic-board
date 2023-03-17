@@ -1,11 +1,14 @@
 package com.study.board.dto;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class LoginDto {
 
+    @NotEmpty
     private String loginId;
 
+    @NotEmpty
     private String loginPw;
 
     public LoginDto(String loginId, String loginPw) {

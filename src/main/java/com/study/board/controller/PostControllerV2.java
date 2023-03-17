@@ -9,15 +9,20 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Controller
 @RequestMapping("/v2")
 public class PostControllerV2 {
     private final PostServiceV2 postServiceV2;
     private final PostMapper postMapper;
+
 
     //생성자 주입 방식
     //injection 방식은 총 3가지가 있다
@@ -38,12 +43,12 @@ public class PostControllerV2 {
     }
 
     @GetMapping("/posts/page")
-    public String postByPage(Model model) {
+    public String postByPage(Model model, HttpServletRequest request) {
         List<Post> allPostPage = postServiceV2.getAllPostByPage(0);
         List<PostDto> collect = allPostPage.stream().map(a -> new PostDto(a.getId(), a.getAuthor(), a.getTitle(), a.getContent())).collect(Collectors.toList());
         int postCount = postServiceV2.getAllPostCount();
-        model.addAttribute("pageData", postCount);
 
+        model.addAttribute("pageData", postCount);
         model.addAttribute("form", collect);
         return "/postListPageV2";
     }

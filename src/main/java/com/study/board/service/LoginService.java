@@ -1,5 +1,7 @@
 package com.study.board.service;
 
+import com.study.board.entity.Member;
+
 public interface LoginService {
-    String getMember(String checkId, String checkPw);
+    Member getMember(String checkId, String checkPw);
 }
