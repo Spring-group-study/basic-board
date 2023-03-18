@@ -27,15 +27,13 @@ public class MemberControllerV1 {
     }
 
     @GetMapping("/login")
-    public String login(Model model) {
-        MemberDto member = new MemberDto();
-        model.addAttribute("member", member);
+    public String login(@ModelAttribute("member") MemberDto member) {
         return "member/login";
     }
 
     @PostMapping("/login")  //문제있음..로그인 버튼 누르면 아무일도 안일어남
     public String login(@Validated @ModelAttribute("member") MemberDto member, BindingResult bindingResult,
-                        @RequestParam(defaultValue = "/") String requestURI, HttpServletRequest request) {
+                        @RequestParam(defaultValue = "/") String redirectURI, HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             return "member/login";
         }
@@ -50,11 +48,15 @@ public class MemberControllerV1 {
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
         System.out.println("========로그인 성공 : "+loginMember.getLoginId()+"||"+loginMember.getNickname()+"========");
-        return "redirect:"+requestURI;
+        return "redirect:"+redirectURI;
     }
 
-    //로그아웃 구현 필요
-
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.invalidate();
+        return "redirect:/";
+    }
 
     @GetMapping("/register")
     public String register(Model model) {
@@ -74,7 +76,6 @@ public class MemberControllerV1 {
         System.out.println("========회원가입 성공========");
 
         HttpSession session = request.getSession();
-
         session.setAttribute(SessionConst.LOGIN_MEMBER, registerMember);
         System.out.println("========로그인 성공 : "+registerMember.getLoginId()+"||"+registerMember.getNickname()+"========");
 
