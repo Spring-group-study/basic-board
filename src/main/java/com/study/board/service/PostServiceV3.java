@@ -43,4 +43,8 @@ public class PostServiceV3 {
         return postRepository.pagedFindAll(pagination);
 
     }
+
+    public void delete(Long id) {
+        postRepository.delete(id);
+    }
 }
