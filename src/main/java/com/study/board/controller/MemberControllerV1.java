@@ -1,5 +1,6 @@
 package com.study.board.controller;
 
+import com.study.board.dto.LoginDto;
 import com.study.board.dto.MemberDto;
 import com.study.board.entity.Member;
 import com.study.board.login.session.SessionConst;
@@ -27,16 +28,23 @@ public class MemberControllerV1 {
     }
 
     @GetMapping("/login")
-    public String login(@ModelAttribute("member") MemberDto member) {
+    public String login(Model model) {
+        LoginDto member = new LoginDto();
+        model.addAttribute("member", member);
         return "member/login";
     }
 
-    @PostMapping("/login")  //문제있음..로그인 버튼 누르면 아무일도 안일어남
-    public String login(@Validated @ModelAttribute("member") MemberDto member, BindingResult bindingResult,
+    @PostMapping("/login")  //로그인DTO를 따로 만들어 줘야 오류가 안남
+    /**
+     * 그냥 멤버DTO 로 하면 nickname이 null이라서 오류가 남 -> MemberDto의 nickname에 @NotBlank를 주석처리하면 되긴 함
+     * 로그인 DTO를 따로 만들기로 결정함
+     */
+    public String login(@Validated @ModelAttribute("member") LoginDto member, BindingResult bindingResult,
                         @RequestParam(defaultValue = "/") String redirectURI, HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             return "member/login";
         }
+
         Member loginMember = memberServiceV1.login(member.getLoginId(), member.getPassword());
         if (loginMember == null) {
             bindingResult.reject("loginFailed", "아이디 또는 비밀번호 오류입니다.");

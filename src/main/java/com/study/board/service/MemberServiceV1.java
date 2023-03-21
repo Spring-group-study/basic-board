@@ -22,13 +22,11 @@ public class MemberServiceV1 {
 
     public Member login(String loginId, String pw) {
         Member member = memberRepositoryV1.findByLoginId(loginId);
-        if (member == null) {
-            return null;
-        }
-        if (member.getPassword() == pw) {
-            return member;
-        }
-        return null;
+        if (member.getLoginId().equals(loginId)&&member.getPassword().equals(pw)) {
+                return member;
+        }else{
+                return null;
+            }
     }
 
     public Member findById(Long id) {
