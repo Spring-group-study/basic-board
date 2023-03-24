@@ -15,7 +15,7 @@ public interface PostRepositoryV4 {
 
     public List<PostV2> findAll();
 
-    public List<PostV2> pagedFindAll(Pagination pagination);
+    public List<PostV2> pagedFindAll(int pageNum, int pageSize);
 
     public int postCnt();
 

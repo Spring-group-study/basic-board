@@ -1,12 +1,11 @@
 package com.study.board.repository;
 
-import com.study.board.dto.PostDto;
 import com.study.board.dto.PostDtoV2;
-import com.study.board.entity.Post;
 import com.study.board.entity.PostV2;
 import com.study.board.mapper.MapperV5;
-import com.study.board.paging.Pagination;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -38,9 +37,9 @@ public class PostRepositoryImplV4 implements PostRepositoryV4 {
         return em.createQuery(jpql, PostV2.class).getResultList();
     }
 
-    //페이징 기능 구현해야함
+    //페이징 기능 구현해야함 -> querydsl...
     @Override
-    public List<PostV2> pagedFindAll(Pagination pagination) {
+    public List<PostV2> pagedFindAll(int pageNum, int pageSize) {
         return null;
     }
 

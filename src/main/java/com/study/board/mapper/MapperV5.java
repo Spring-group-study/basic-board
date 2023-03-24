@@ -26,8 +26,15 @@ public class MapperV5 {
         post.setAuthor(dto.getAuthor());
         post.setTitle(dto.getTitle());
         post.setContent(dto.getContent());
-
         return post;
+    }
+
+    public PostDtoV2 postEntityToDto(PostV2 post) {
+        PostDtoV2 dto = new PostDtoV2();
+        dto.setAuthor(post.getAuthor());
+        dto.setTitle(post.getTitle());
+        dto.setContent(post.getContent());
+        return dto;
     }
 
     public MemberV2 SaveDtoToEntity(MemberDtoV2 dto) {
