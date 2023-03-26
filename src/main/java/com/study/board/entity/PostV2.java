@@ -3,18 +3,16 @@ package com.study.board.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name="post_v2")
 @Getter
 @Setter
 public class PostV2 {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //AUTO로 하면 init() 실행시 pk가 member의 pk에 이어서 만들어짐
     private Long postId;
     private String author;
     private String title;

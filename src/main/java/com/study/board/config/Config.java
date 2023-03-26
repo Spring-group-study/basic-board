@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.annotation.PostConstruct;
 
-@Configuration
+//@Configuration
 public class Config {
     private final PostServiceV3 postServiceV3;
     private final PostRepositoryImplV3 postRepositoryImplV3;

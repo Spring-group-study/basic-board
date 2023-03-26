@@ -38,8 +38,7 @@ public class MemberControllerV2 {
 
     @PostMapping("/login")  //로그인DTO를 따로 만들어 줘야 오류가 안남
     /**
-     * 그냥 멤버DTO 로 하면 nickname이 null이라서 오류가 남 -> MemberDto의 nickname에 @NotBlank를 주석처리하면 되긴 함
-     * 로그인 DTO를 따로 만들기로 결정함
+     * [ org.hibernate.hql.internal.ast.QuerySyntaxException: member_v2 is not mapped ] 오류
      */
     public String login(@Validated @ModelAttribute("member") LoginDtoV2 member, BindingResult bindingResult,
                         @RequestParam(defaultValue = "/") String redirectURI, HttpServletRequest request) {
@@ -76,7 +75,13 @@ public class MemberControllerV2 {
         if (bindingResult.hasErrors()) {
             return "member/register";
         }
-        redirectAttributes.addAttribute("memberId", memberServiceV2.save(member));
+        Long savedMemberId = memberServiceV2.save(member);
+        MemberV2 savedMember = memberServiceV2.findById(savedMemberId);
+
+        HttpSession session = request.getSession();
+        session.setAttribute(SessionConst.LOGIN_MEMBER, savedMember);
+
+        redirectAttributes.addAttribute("memberId", savedMemberId);
         return "redirect:/member/individual/{memberId}";
     }
 
