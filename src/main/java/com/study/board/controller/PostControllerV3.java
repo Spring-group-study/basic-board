@@ -87,8 +87,8 @@ public class PostControllerV3 {
     }
 
     @PostMapping("/post/update")
-    public String updatePost(@ModelAttribute MyPost myPost) {
-        postServiceV3.updatePost(myPost.getId(), myPost.getAuthor(), myPost.getContent(), myPost.getTitle());
+    public String updatePost(@ModelAttribute(value = "post") PostDto dto) {
+        postServiceV3.updatePost(dto.getId(), dto.getAuthor(), dto.getContent(), dto.getTitle());
         return "redirect:/home";
     }
 }
