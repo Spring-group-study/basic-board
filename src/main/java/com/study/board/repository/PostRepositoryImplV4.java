@@ -36,7 +36,7 @@ public class PostRepositoryImplV4 implements PostRepositoryV4 {
     public List<PostV2> findAllPerPage(int page) {
         String jpql = "select p from PostV2 p order by p.postId desc";
         return em.createQuery(jpql, PostV2.class)
-                .setFirstResult(JpaPagingConst.POST_CNT_PER_PAGE * page)
+                .setFirstResult(JpaPagingConst.POST_CNT_PER_PAGE * (page-1))
                 .setMaxResults(JpaPagingConst.POST_CNT_PER_PAGE)
                 .getResultList();
     }
