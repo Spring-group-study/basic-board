@@ -37,9 +37,6 @@ public class MemberControllerV2 {
     }
 
     @PostMapping("/login")  //로그인DTO를 따로 만들어 줘야 오류가 안남
-    /**
-     * [ org.hibernate.hql.internal.ast.QuerySyntaxException: member_v2 is not mapped ] 오류
-     */
     public String login(@Validated @ModelAttribute("member") LoginDtoV2 member, BindingResult bindingResult,
                         @RequestParam(defaultValue = "/") String redirectURI, HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
@@ -52,6 +49,7 @@ public class MemberControllerV2 {
         }
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+
         return "redirect:" + redirectURI;
     }
 

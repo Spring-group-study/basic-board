@@ -13,11 +13,9 @@ public interface PostRepositoryV4 {
 
     public PostV2 findById(Long id);
 
-    public List<PostV2> findAll();
+    public List<PostV2> findAllPerPage(int page);
 
-    public List<PostV2> pagedFindAll(int pageNum, int pageSize);
-
-    public int postCnt();
+    public Integer postCnt();
 
     public PostV2 update(PostV2 post, PostDtoV2 updateParam);
 

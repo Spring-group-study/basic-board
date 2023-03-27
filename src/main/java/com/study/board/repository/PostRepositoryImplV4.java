@@ -2,6 +2,7 @@ package com.study.board.repository;
 
 import com.study.board.dto.PostDtoV2;
 import com.study.board.entity.PostV2;
+import com.study.board.jpapaging.JpaPagingConst;
 import com.study.board.mapper.MapperV5;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -32,20 +33,17 @@ public class PostRepositoryImplV4 implements PostRepositoryV4 {
     }
 
     @Override
-    public List<PostV2> findAll() {
-        String jpql = "select p from PostV2 p";
-        return em.createQuery(jpql, PostV2.class).getResultList();
-    }
-
-    //페이징 기능 구현해야함 -> querydsl...
-    @Override
-    public List<PostV2> pagedFindAll(int pageNum, int pageSize) {
-        return null;
+    public List<PostV2> findAllPerPage(int page) {
+        String jpql = "select p from PostV2 p order by p.postId desc";
+        return em.createQuery(jpql, PostV2.class)
+                .setFirstResult(JpaPagingConst.POST_CNT_PER_PAGE * page)
+                .setMaxResults(JpaPagingConst.POST_CNT_PER_PAGE)
+                .getResultList();
     }
 
     @Override
-    public int postCnt() {
-        return 0;
+    public Integer postCnt() {
+        return em.createQuery("select p from PostV2 p", PostV2.class).getResultList().size();
     }
 
     @Override

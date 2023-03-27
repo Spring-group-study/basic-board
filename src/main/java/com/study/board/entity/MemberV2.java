@@ -6,7 +6,6 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name="member_v2")
 @Getter
 @Setter
 public class MemberV2 {

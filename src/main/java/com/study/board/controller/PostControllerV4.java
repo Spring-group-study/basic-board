@@ -4,6 +4,7 @@ import com.study.board.dto.PostDto;
 import com.study.board.dto.PostDtoV2;
 import com.study.board.entity.Post;
 import com.study.board.entity.PostV2;
+import com.study.board.jpapaging.JpaPagination;
 import com.study.board.mapper.MapperV5;
 import com.study.board.paging.Pagination;
 import com.study.board.paging.PagingConst;
@@ -18,6 +19,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Slf4j
 @Controller
 @RequestMapping("/board")
@@ -30,7 +33,14 @@ public class PostControllerV4 {     //validation 구현
     //게시판 메인
     @GetMapping("/main/{page}")
     public String posts(@PathVariable int page, Model model) {
-        //페이징 jpa로 구현해야함
+        List<PostV2> postList = postService.findAllByPage(page);
+        JpaPagination pagination = new JpaPagination(postService.postCnt(), page);
+        List<Integer> pagesInCurrentBlock = pagination.pagesInCurrentBlock();
+
+
+        model.addAttribute("pagination", pagination);
+        model.addAttribute("posts", postList);
+        model.addAttribute("pagesInCurrentBlock", pagesInCurrentBlock);
 
         return "/board/main";
     }

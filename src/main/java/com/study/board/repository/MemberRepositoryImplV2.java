@@ -40,14 +40,14 @@ public class MemberRepositoryImplV2 implements MemberRepositoryV2 {
 
     @Override
     public MemberV2 findByLoginId(String loginId) {
-        return em.createQuery("select m from member_v2 m where login_id=:loginId", MemberV2.class)
-                .setParameter(loginId, loginId)
+        return em.createQuery("select m from MemberV2 m where m.loginId=:loginIdParam", MemberV2.class)
+                .setParameter("loginIdParam", loginId)
                 .getSingleResult();
     }
 
     @Override
     public List<MemberV2> findAll() {
-        List<MemberV2> list = em.createQuery("select m from member_v2 m", MemberV2.class)
+        List<MemberV2> list = em.createQuery("select m from MemberV2 m", MemberV2.class)
                 .getResultList();
         return list;
     }
@@ -67,6 +67,6 @@ public class MemberRepositoryImplV2 implements MemberRepositoryV2 {
 
     @Override
     public void clear() {
-        em.createQuery("drop table member_v2");
+        em.createQuery("drop table MemberV2");
     }
 }

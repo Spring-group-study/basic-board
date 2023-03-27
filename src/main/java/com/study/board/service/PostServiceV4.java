@@ -25,13 +25,12 @@ public class PostServiceV4 {
         return postRepository.findById(id);
     }
 
-    public List<PostV2> findAll() {
-        return postRepository.findAll();
+    public List<PostV2> findAllByPage(int page) {
+        return postRepository.findAllPerPage(page);
     }
 
-    //페이징 구현 필요
-    public List<PostV2> pagedFindAll() {
-        return null;
+    public Integer postCnt() {
+        return postRepository.postCnt();
     }
 
     public PostV2 update(PostV2 post, PostDtoV2 updateParam) {
