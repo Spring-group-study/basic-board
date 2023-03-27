@@ -1,7 +1,7 @@
 package com.study.board.controller;
 
 import com.study.board.dto.PostDto;
-import com.study.board.entity.Post;
+import com.study.board.entity.MyPost;
 import com.study.board.mapper.PostMapper;
 import com.study.board.service.PostServiceV2;
 import org.springframework.stereotype.Controller;
@@ -9,9 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,16 +34,16 @@ public class PostControllerV2 {
 
     @GetMapping("/posts")
     public String posts(Model model) {
-        List<Post> allPost = postServiceV2.getAllPost();
-        List<PostDto> collect = allPost.stream().map(a -> new PostDto(a.getId(), a.getAuthor(), a.getTitle(), a.getContent())).collect(Collectors.toList());
+        List<MyPost> allMyPost = postServiceV2.getAllPost();
+        List<PostDto> collect = allMyPost.stream().map(a -> new PostDto(a.getId(), a.getAuthor(), a.getTitle(), a.getContent())).collect(Collectors.toList());
         model.addAttribute("form", collect);
         return "/postListV2";
     }
 
     @GetMapping("/posts/page")
     public String postByPage(Model model, HttpServletRequest request) {
-        List<Post> allPostPage = postServiceV2.getAllPostByPage(0);
-        List<PostDto> collect = allPostPage.stream().map(a -> new PostDto(a.getId(), a.getAuthor(), a.getTitle(), a.getContent())).collect(Collectors.toList());
+        List<MyPost> allMyPostPage = postServiceV2.getAllPostByPage(0);
+        List<PostDto> collect = allMyPostPage.stream().map(a -> new PostDto(a.getId(), a.getAuthor(), a.getTitle(), a.getContent())).collect(Collectors.toList());
         int postCount = postServiceV2.getAllPostCount();
 
         model.addAttribute("pageData", postCount);
@@ -55,14 +53,14 @@ public class PostControllerV2 {
 
     @GetMapping("/posts/page/{pageNumber}")
     public String postByPage(Model model, @PathVariable(value = "pageNumber") int pageNumber) {
-        List<Post> allPostByPage = postServiceV2.getAllPostByPage(pageNumber);
-        model.addAttribute("form", allPostByPage);
+        List<MyPost> allMyPostByPage = postServiceV2.getAllPostByPage(pageNumber);
+        model.addAttribute("form", allMyPostByPage);
         return "/postListPageV2";
     }
 
     @GetMapping("/posts/new")
     public String createPost(Model model) {
-        model.addAttribute("form", new Post());
+        model.addAttribute("form", new MyPost());
         return "/newPostV2";
     }
 
@@ -71,8 +69,8 @@ public class PostControllerV2 {
         if (result.hasErrors()) {
             return "/posts/new";
         }else {
-        Post post = new Post(dto.getId(), dto.getAuthor(), dto.getTitle(), dto.getContent());
-        postServiceV2.savePost(post);
+        MyPost myPost = new MyPost(dto.getId(), dto.getAuthor(), dto.getTitle(), dto.getContent());
+        postServiceV2.savePost(myPost);
         return "redirect:/home";}
     }
 
@@ -84,14 +82,14 @@ public class PostControllerV2 {
 
     @GetMapping("/post/{postId}")
     public String post(Model model, @PathVariable(value = "postId") Long id) {
-        Post onePost = postServiceV2.getOnePost(id);
-        model.addAttribute("post", onePost);
+        MyPost oneMyPost = postServiceV2.getOnePost(id);
+        model.addAttribute("post", oneMyPost);
         return "/postDetailV2";
     }
 
     @PostMapping("/post/update")
-    public String updatePost(@ModelAttribute Post post) {
-        postServiceV2.updatePost(post.getId(), post.getAuthor(), post.getContent(), post.getTitle());
+    public String updatePost(@ModelAttribute MyPost myPost) {
+        postServiceV2.updatePost(myPost.getId(), myPost.getAuthor(), myPost.getContent(), myPost.getTitle());
         return "redirect:/home";
     }
 }

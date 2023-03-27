@@ -21,13 +21,13 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="post, i: ${form}">
-        <td th:text="${post.id}"></td>
-        <td th:text="${post.title}"></td>
-        <td th:text="${post.author}"></td>
-        <td th:text="${post.content}"></td>
-        <td><a class="bi bi-hammer" th:href="@{/v1/post/{postId}(postId = ${post.id})}"></a></td>
-        <td><a class="bi bi-trash" th:href="@{/v1/post/delete/{postId}(postId = ${post.id})}"></a></td>
+    <tr th:each="myPost, i: ${form}">
+        <td th:text="${myPost.id}"></td>
+        <td th:text="${myPost.title}"></td>
+        <td th:text="${myPost.author}"></td>
+        <td th:text="${myPost.content}"></td>
+        <td><a class="bi bi-hammer" th:href="@{/v1/post/{postId}(postId = ${myPost.id})}"></a></td>
+        <td><a class="bi bi-trash" th:href="@{/v1/post/delete/{postId}(postId = ${myPost.id})}"></a></td>
     </tr>
     </tbody>
 </table>

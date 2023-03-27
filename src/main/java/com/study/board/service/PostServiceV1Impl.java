@@ -1,6 +1,6 @@
 package com.study.board.service;
 
-import com.study.board.entity.Post;
+import com.study.board.entity.MyPost;
 import com.study.board.repository.PostRepositoryV1;
 import org.springframework.stereotype.Service;
 
@@ -17,19 +17,19 @@ public class PostServiceV1Impl implements PostServiceV1 {
 
 
     @Override
-    public List<Post> getAllPost() {
-        List<Post> posts = repository.findAll();
-        return posts;
+    public List<MyPost> getAllPost() {
+        List<MyPost> myPosts = repository.findAll();
+        return myPosts;
     }
 
     @Override
-    public Post getOnePost(Long id) {
+    public MyPost getOnePost(Long id) {
         return repository.findById(id);
     }
 
     @Override
-    public void savePost(Post post) {
-        repository.save(post);
+    public void savePost(MyPost myPost) {
+        repository.save(myPost);
     }
 
     @Override

@@ -1,19 +1,19 @@
 package com.study.board.service;
 
-import com.study.board.entity.Post;
+import com.study.board.entity.MyPost;
 
 import java.util.List;
 
 public interface PostServiceV2 {
 
-    List<Post> getAllPost();
+    List<MyPost> getAllPost();
 
-    List<Post> getAllPostByPage(int pageNumber);
+    List<MyPost> getAllPostByPage(int pageNumber);
 
     int getAllPostCount();
 
-    Post getOnePost(Long id);
-    void savePost(Post post);
+    MyPost getOnePost(Long id);
+    void savePost(MyPost myPost);
 
     void updatePost(Long id, String author, String content, String title);
 

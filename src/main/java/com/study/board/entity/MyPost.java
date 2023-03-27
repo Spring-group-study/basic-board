@@ -1,20 +1,13 @@
-package com.study.board.dto;
+package com.study.board.entity;
 
-import javax.validation.constraints.NotEmpty;
+import org.springframework.context.annotation.Configuration;
 
-public class PostDto {
+@Configuration
+public class MyPost {
     private Long id;
-    @NotEmpty
     private String author;
     private String title;
     private String content;
-
-    public PostDto(Long id, String author, String title, String content) {
-        this.id = id;
-        this.author = author;
-        this.title = title;
-        this.content = content;
-    }
 
     public Long getId() {
         return id;
@@ -45,6 +38,22 @@ public class PostDto {
     }
 
     public void setContent(String content) {
+        this.content = content;
+    }
+
+    public MyPost() {
+
+    }
+
+    public MyPost(Long id, String author, String title, String content) {
+        this.id = id;
+        this.author = author;
+        this.title = title;
+        this.content = content;
+    }
+    public void toEntity(String author, String title, String content){
+        this.author = author;
+        this.title = title;
         this.content = content;
     }
 }

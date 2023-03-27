@@ -1,6 +1,6 @@
 package com.study.board.service;
 
-import com.study.board.entity.Post;
+import com.study.board.entity.MyPost;
 import com.study.board.repository.PostRepositoryV2;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +17,14 @@ public class PostServiceV2Impl implements PostServiceV2 {
 
 
     @Override
-    public List<Post> getAllPost() {
-        List<Post> posts = repository.findAll();
-        return posts;
+    public List<MyPost> getAllPost() {
+        List<MyPost> myPosts = repository.findAll();
+        return myPosts;
     }
 
     @Override
-    public List<Post> getAllPostByPage(int pageNumber) {
-        List<Post> allByPage = repository.findAllByPage(pageNumber);
+    public List<MyPost> getAllPostByPage(int pageNumber) {
+        List<MyPost> allByPage = repository.findAllByPage(pageNumber);
         return allByPage;
     }
 
@@ -36,13 +36,13 @@ public class PostServiceV2Impl implements PostServiceV2 {
     }
 
     @Override
-    public Post getOnePost(Long id) {
+    public MyPost getOnePost(Long id) {
         return repository.findById(id);
     }
 
     @Override
-    public void savePost(Post post) {
-        repository.save(post);
+    public void savePost(MyPost myPost) {
+        repository.save(myPost);
     }
 
     @Override

@@ -1,12 +1,11 @@
 package com.study.board.controller;
 
-import com.study.board.entity.Post;
+import com.study.board.entity.MyPost;
 import com.study.board.service.PostServiceV1;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Controller
@@ -25,20 +24,20 @@ public class PostControllerV1 {
 
     @GetMapping("/posts")
     public String posts(Model model) {
-        List<Post> allPost = postServiceV1.getAllPost();
-        model.addAttribute("form", allPost);
+        List<MyPost> allMyPost = postServiceV1.getAllPost();
+        model.addAttribute("form", allMyPost);
         return "/postListV1";
     }
 
     @GetMapping("/posts/new")
     public String createPost(Model model) {
-        model.addAttribute("form",new Post());
+        model.addAttribute("form",new MyPost());
         return "/newPostV1";
     }
 
     @PostMapping("/posts/new")
-    public String createPost(@ModelAttribute("form") Post post) {
-        postServiceV1.savePost(post);
+    public String createPost(@ModelAttribute("form") MyPost myPost) {
+        postServiceV1.savePost(myPost);
         return "redirect:/home";
     }
 
@@ -50,14 +49,14 @@ public class PostControllerV1 {
 
     @GetMapping("/post/{postId}")
     public String post(Model model, @PathVariable(value = "postId") Long id) {
-        Post onePost = postServiceV1.getOnePost(id);
-        model.addAttribute("post", onePost);
+        MyPost oneMyPost = postServiceV1.getOnePost(id);
+        model.addAttribute("post", oneMyPost);
         return "/postDetailV1";
     }
 
     @PostMapping("/post/update/")
-    public String updatePost(@ModelAttribute Post post) {
-        postServiceV1.updatePost(post.getId(), post.getAuthor(),post.getContent(),post.getTitle());
+    public String updatePost(@ModelAttribute MyPost myPost) {
+        postServiceV1.updatePost(myPost.getId(), myPost.getAuthor(), myPost.getContent(), myPost.getTitle());
         return "redirect:/home";
     }
 
