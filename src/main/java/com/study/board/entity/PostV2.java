@@ -14,7 +14,7 @@ public class PostV2 {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //AUTO로 하면 init() 실행시 pk가 member의 pk에 이어서 만들어짐
     private Long postId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private MemberV2 member;
 

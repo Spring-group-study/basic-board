@@ -52,12 +52,12 @@ public class PostControllerV4 {     //validation 구현
 
     //단일 게시글
     @GetMapping("/post/{id}")
-    //failed to lazily initialize a collection of role: com.study.board.entity.MemberV2.posts, could not initialize proxy - no Session;
+    //지연로딩 관련 에러
     public String post(@PathVariable Long id, HttpServletRequest request,Model model) {
         PostV2 post = postService.findById(id);
-        Boolean isAuthor = postService.isAuthor(id, request);
+//        Boolean isAuthor = postService.isAuthor(id, request);
 
-        model.addAttribute("isAuthor", isAuthor);   //true일 경우 html에 수정 버튼 나타나도록
+        model.addAttribute("isAuthor", mapper.getMemberFromSession(request).getMemberId());   //true일 경우 html에 수정 버튼 나타나도록
         model.addAttribute("post", post);
         return "/board/post";
     }
@@ -92,6 +92,7 @@ public class PostControllerV4 {     //validation 구현
         PostV2 post = postService.findById(id);
         PostDtoV2 dto = mapper.postEntityToDto(post);
         model.addAttribute("post", dto);
+        model.addAttribute("postId", post.getPostId());
         return "/board/editPost";
     }
 
