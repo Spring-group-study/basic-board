@@ -27,7 +27,7 @@
                 <td><a href="post" th:href="@{/board/post/{id} (id=${post.postId})}"
                        th:text="${post.title}">게시물 제목</a></td>
 
-                <td th:text="${post.author}">작성자</td>
+                <td th:text="${post.member.nickname}">작성자</td>
 
             </tr>
             </tbody>

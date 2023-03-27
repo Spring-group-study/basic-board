@@ -28,7 +28,7 @@ public class MemberRepositoryImplV2 implements MemberRepositoryV2 {
 
     @Override
     public Long save(MemberDtoV2 dto) {
-        MemberV2 member = mapper.SaveDtoToEntity(dto);
+        MemberV2 member = mapper.memberSaveDtoToEntity(dto);
         em.persist(member);
         return member.getMemberId();
     }
@@ -54,7 +54,7 @@ public class MemberRepositoryImplV2 implements MemberRepositoryV2 {
 
     @Override
     public MemberV2 update(MemberV2 member, MemberDtoV2 updateParam) {
-        MemberV2 updateMember = mapper.updateDtoToEntity(member, updateParam);
+        MemberV2 updateMember = mapper.memberUpdateDtoToEntity(member, updateParam);
         em.persist(updateMember);
         return updateMember;
     }

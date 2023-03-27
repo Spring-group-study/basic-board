@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -15,6 +17,9 @@ public class MemberV2 {
     private String loginId;            //로그인 ID
     private String password;
     private String nickname;
+
+    @OneToMany(mappedBy = "member")
+    private List<PostV2> posts = new ArrayList<>();
 
     public MemberV2() {
     }

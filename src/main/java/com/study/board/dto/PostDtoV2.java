@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 public class PostDtoV2 {
     @NotBlank
-    private String author;
+    private String nickname;
 
     @NotBlank
     private String title;
@@ -20,8 +20,12 @@ public class PostDtoV2 {
     public PostDtoV2() {
     }
 
-    public PostDtoV2(String author, String title, String content) {
-        this.author = author;
+    public PostDtoV2(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public PostDtoV2(String nickname, String title, String content) {
+        this.nickname = nickname;
         this.title = title;
         this.content = content;
     }
