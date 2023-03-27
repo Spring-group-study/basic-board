@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-@Controller
+//@Controller
 public class LoginControllerV1 {
 
     public static final String MEMBER_ID = "memberId";
