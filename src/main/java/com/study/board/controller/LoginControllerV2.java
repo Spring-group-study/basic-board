@@ -1,8 +1,11 @@
 package com.study.board.controller;
 
 import com.study.board.dto.LoginDto;
+import com.study.board.entity.Member;
 import com.study.board.entity.MyMember;
 import com.study.board.service.LoginServiceV1;
+import com.study.board.service.LoginServiceV2;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -13,15 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-//@Controller
+@Controller
+@RequiredArgsConstructor
 public class LoginControllerV2 {
+    private final LoginServiceV2 loginServiceV2;
 
-    public static final String MEMBER_ID = "memberId";
-    private final LoginServiceV1 loginServiceV1;
-
-    public LoginControllerV2(LoginServiceV1 loginServiceV1) {
-        this.loginServiceV1 = loginServiceV1;
-    }
 
     @GetMapping("/login")
     public String login(@ModelAttribute LoginDto loginDto) {
@@ -34,7 +33,7 @@ public class LoginControllerV2 {
         if (result.hasErrors()) {
             return "/loginForm";
         }
-        MyMember myMember = loginServiceV1.getMember(dto.getLoginId(), dto.getLoginPw());
+        Member myMember = loginServiceV2.findMember(dto.getLoginId(), dto.getLoginPw());
         if (myMember == null) {
             result.reject("loginFail","아아디 또는 비밀번호가 맞지않습니다.");
             return "/loginForm";
@@ -44,7 +43,7 @@ public class LoginControllerV2 {
             if (redirector == null){
                 redirector = "/";
             }
-            session.setAttribute(MEMBER_ID, myMember);
+            session.setAttribute(MemberId.MEMBER_ID, myMember);
             return "redirect:"+redirector;
         }
     }
