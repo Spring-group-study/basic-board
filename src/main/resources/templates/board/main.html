@@ -27,7 +27,7 @@
                 <td><a href="post" th:href="@{/board/post/{id} (id=${post.postId})}"
                        th:text="${post.title}">게시물 제목</a></td>
 
-                <td th:text="${post.author}">작성자</td>
+                <td th:text="${post.member.nickname}">작성자</td>
 
             </tr>
             </tbody>
@@ -36,14 +36,14 @@
 
         <nav aria-label="Page navigation example">
             <ul class="pagination offset-md-4">
-                <li class="page-item"><a class="page-link" th:href="@{/board/main/{page} (page=${pagination.startPage}-5)}">Pre</a></li>
+                <li class="page-item"><a class="page-link" th:href="@{/board/main/{page} (page=${pagination.prePageStartPage})}">Pre</a></li>
 
                 <div th:each=" page : ${pagesInCurrentBlock}">
                     <li class="page-item"><a class="page-link" th:text="${page}"
                                              th:href="@{/board/main/{page} (page=${page})}">1</a></li>
                 </div>
 
-                <li class="page-item"><a class="page-link" th:href="@{/board/main/{page} (page=${pagination.endPage}+1)}">Next</a></li>
+                <li class="page-item"><a class="page-link" th:href="@{/board/main/{page} (page=${pagination.nextPageStartPage})}">Next</a></li>
             </ul>
         </nav>
 
