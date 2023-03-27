@@ -1,56 +1,57 @@
 package com.study.board.controller;
 
 import com.study.board.dto.LoginDto;
-import com.study.board.entity.Member;
-import com.study.board.service.LoginService;
+import com.study.board.entity.MyMember;
+import com.study.board.service.LoginServiceV1;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
-@Controller
-public class LoginController {
+//@Controller
+public class LoginControllerV2 {
 
     public static final String MEMBER_ID = "memberId";
-    private final LoginService loginService;
+    private final LoginServiceV1 loginServiceV1;
 
-    public LoginController(LoginService loginService) {
-        this.loginService = loginService;
+    public LoginControllerV2(LoginServiceV1 loginServiceV1) {
+        this.loginServiceV1 = loginServiceV1;
     }
 
     @GetMapping("/login")
-    public String login(Model model) {
-        model.addAttribute("loginDto", new LoginDto());
+    public String login(@ModelAttribute LoginDto loginDto) {
         return "/loginForm";
     }
 
     @PostMapping("/login")
-    public String login(@Valid @ModelAttribute LoginDto dto, @RequestParam(defaultValue = "/home") String redirectURL,
-                        BindingResult result, HttpServletRequest request) {
+    public String login(@Validated @ModelAttribute LoginDto dto, BindingResult result,
+                        HttpServletRequest request) {
         if (result.hasErrors()) {
             return "/loginForm";
         }
-        Member member = loginService.getMember(dto.getLoginId(), dto.getLoginPw());
-        if (member == null) {
+        MyMember myMember = loginServiceV1.getMember(dto.getLoginId(), dto.getLoginPw());
+        if (myMember == null) {
             result.reject("loginFail","아아디 또는 비밀번호가 맞지않습니다.");
             return "/loginForm";
         }else {
             HttpSession session = request.getSession();
-            session.setAttribute(MEMBER_ID, member);
-            return "redirect:/";
+            String redirector = request.getParameter("redirector");
+            if (redirector == null){
+                redirector = "/";
+            }
+            session.setAttribute(MEMBER_ID, myMember);
+            return "redirect:"+redirector;
         }
     }
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
         }

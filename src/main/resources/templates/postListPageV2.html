@@ -26,8 +26,8 @@
         <td th:text="${postDto.title}"></td>
         <td th:text="${postDto.author}"></td>
         <td th:text="${postDto.content}"></td>
-        <td><a class="bi bi-hammer" th:href="@{/v2/post/{postId}(postId = ${postDto.id})}"></a></td>
-        <td><a class="bi bi-trash" th:href="@{/v2/post/delete/{postId}(postId = ${postDto.id})}"></a></td>
+        <td><a class="bi bi-hammer" th:href="@{/v2/myPost/{postId}(postId = ${postDto.id})}"></a></td>
+        <td><a class="bi bi-trash" th:href="@{/v2/myPost/delete/{postId}(postId = ${postDto.id})}"></a></td>
     </tr>
     </tbody>
 </table>

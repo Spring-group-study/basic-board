@@ -1,12 +1,12 @@
 package com.study.board.repository;
 
-import com.study.board.entity.Post;
+import com.study.board.entity.MyPost;
 
 import java.util.List;
 public interface PostRepositoryV1 {
-    List<Post> findAll();
-    Post findById(Long id);
-    void save(Post post);
+    List<MyPost> findAll();
+    MyPost findById(Long id);
+    void save(MyPost myPost);
 
     void update(Long id, String author, String content, String title);
 

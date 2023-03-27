@@ -1,6 +1,6 @@
 package com.study.board.repository;
 
-import com.study.board.entity.Post;
+import com.study.board.entity.MyPost;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @SpringBootTest
-class PostRepositoryV2ImplTest {
+class MyPostRepositoryV3V2ImplTest {
     @Autowired PostRepositoryV2 repositoryV2;
 
     @BeforeEach
@@ -24,16 +24,16 @@ class PostRepositoryV2ImplTest {
     @Test
     public void 전체조회() throws Exception {
         //given
-        Post post1 = new Post(10l,"테스트","테스트","테스트");
-        Post post2 = new Post(11l,"테스트","테스트","테스트");
-        Post post3 = new Post(12l,"테스트","테스트","테스트");
-        repositoryV2.savePost(post1);
-        repositoryV2.savePost(post2);
-        repositoryV2.savePost(post3);
+        MyPost myPost1 = new MyPost(10l,"테스트","테스트","테스트");
+        MyPost myPost2 = new MyPost(11l,"테스트","테스트","테스트");
+        MyPost myPost3 = new MyPost(12l,"테스트","테스트","테스트");
+        repositoryV2.savePost(myPost1);
+        repositoryV2.savePost(myPost2);
+        repositoryV2.savePost(myPost3);
         //when
-        List<Post> postList = repositoryV2.findAll();
+        List<MyPost> myPostList = repositoryV2.findAll();
         //then
-        assertThat(postList.size()).isEqualTo(9);
+        assertThat(myPostList.size()).isEqualTo(9);
     }
     @Transactional
     @Test
@@ -41,16 +41,16 @@ class PostRepositoryV2ImplTest {
     // postconstruct로 생성되는 객체를 없애줘야 id값 자동생성에서 에러가 나지 않는다(id제약조건)
     public void 한건조회_및_프록시_테스트() throws Exception {
         //given
-        Post post = new Post();
-        post.setAuthor("테스트");
-        post.setContent("test");
-        post.setTitle("test");
-        Long saveId = repositoryV2.save(post);
+        MyPost myPost = new MyPost();
+        myPost.setAuthor("테스트");
+        myPost.setContent("test");
+        myPost.setTitle("test");
+        Long saveId = repositoryV2.save(myPost);
         //when
-        Post findPost = repositoryV2.findById(saveId);
+        MyPost findMyPost = repositoryV2.findById(saveId);
         //then
-        System.out.println("findPost = " + findPost);
-        System.out.println("post = " + post);
-        assertThat(post).isNotSameAs(findPost);
+        System.out.println("findPost = " + findMyPost);
+        System.out.println("post = " + myPost);
+        assertThat(myPost).isNotSameAs(findMyPost);
     }
 }

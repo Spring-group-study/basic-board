@@ -1,6 +1,6 @@
 package com.study.board.repository;
 
-import com.study.board.entity.Post;
+import com.study.board.entity.MyPost;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,7 +10,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class PostServiceV1ImplTest {
+class MyPostServiceV1ImplTest {
 
     @Autowired
     private PostRepositoryV1 postRepositoryV1;
@@ -20,7 +20,7 @@ class PostServiceV1ImplTest {
         //given
 
         //when
-        List<Post> all = postRepositoryV1.findAll();
+        List<MyPost> all = postRepositoryV1.findAll();
 
         //then
         assertThat(all.size()).isNotEqualTo(0);
@@ -28,32 +28,32 @@ class PostServiceV1ImplTest {
     @Test
     public void 한건_조회() throws Exception {
         //given
-        Post testPost = new Post(15l, "테스트", "테스트", "테스트");
-        postRepositoryV1.save(testPost);
+        MyPost testMyPost = new MyPost(15l, "테스트", "테스트", "테스트");
+        postRepositoryV1.save(testMyPost);
         //when
-        Post findPost = postRepositoryV1.findById(12l);
+        MyPost findMyPost = postRepositoryV1.findById(12l);
         //then
-        assertThat(findPost.getAuthor()).isEqualTo(testPost.getAuthor());
+        assertThat(findMyPost.getAuthor()).isEqualTo(testMyPost.getAuthor());
 
     }
     @Test
     public void 데이터_수정() throws Exception {
         //given
-        Post testPost = new Post();
-        testPost.toEntity("테스트", "테스트", "테스트");
-        postRepositoryV1.save(testPost);
+        MyPost testMyPost = new MyPost();
+        testMyPost.toEntity("테스트", "테스트", "테스트");
+        postRepositoryV1.save(testMyPost);
         //when
         postRepositoryV1.update(12l,"테스트1","테스트2","테스트3");
-        Post findPost = postRepositoryV1.findById(12l);
+        MyPost findMyPost = postRepositoryV1.findById(12l);
         //then
-        assertThat(findPost.getAuthor()).isEqualTo("테스트1");
+        assertThat(findMyPost.getAuthor()).isEqualTo("테스트1");
     }
     @Test
     public void 데이터_삭제() throws Exception {
         //given
-        Post testPost = new Post();
-        testPost.toEntity("테스트", "테스트", "테스트");
-        postRepositoryV1.save(testPost);
+        MyPost testMyPost = new MyPost();
+        testMyPost.toEntity("테스트", "테스트", "테스트");
+        postRepositoryV1.save(testMyPost);
         //when
         postRepositoryV1.delete(12l);
         //then

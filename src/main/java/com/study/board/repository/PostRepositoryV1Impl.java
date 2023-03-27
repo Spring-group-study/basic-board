@@ -1,6 +1,6 @@
 package com.study.board.repository;
 
-import com.study.board.entity.Post;
+import com.study.board.entity.MyPost;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -12,10 +12,10 @@ import java.util.Map;
 public class PostRepositoryV1Impl implements PostRepositoryV1 {
 
     //db를 대신 할 인메모리 컬렉션리스트 생성
-    private static final List<Post> db = new ArrayList<>();
+    private static final List<MyPost> db = new ArrayList<>();
     //해쉬맵으로 생성가능함, 그러나 이렇게 했을때는 id값을 엔티티에서 제외시키는게 맞고
     //db에서 input쿼리가 자주 호출된다면 ArrayList가, select 쿼리가 빈번하다면 haspMap이 시간복잡도 상 효율적이다.
-    private final Map<Long, Post> db1 = new HashMap<>();
+    private final Map<Long, MyPost> db1 = new HashMap<>();
     //id값 자동증가를 위한 id값 대체 변수
     private Long inputId = 0l;
 
@@ -24,7 +24,7 @@ public class PostRepositoryV1Impl implements PostRepositoryV1 {
      * @return list
      */
     @Override
-    public List<Post> findAll() {
+    public List<MyPost> findAll() {
         return db;
     }
 
@@ -38,27 +38,27 @@ public class PostRepositoryV1Impl implements PostRepositoryV1 {
      * @return
      */
     @Override
-    public Post findById(Long id) {
-        Post post = db.stream()
+    public MyPost findById(Long id) {
+        MyPost myPost = db.stream()
                 .filter(i -> i.getId().equals(id))
                 .findFirst().get();
-        return post;
+        return myPost;
     }
 
     /**
      * post를 매개변수로 가져온 후, 생성한 리스트에 값이 없다면 id값을 1번을 최초로 부여하고
      * 그 다음 부터는 1씩 증가하여 id값을 부여한다.
-     * @param post
+     * @param myPost
      */
     @Override
-    public void save(Post post) {
+    public void save(MyPost myPost) {
         if (db.isEmpty()) {
             inputId = 1l;
         } else if (db.size() != 0) {
             inputId = inputId + 1l;
         }
-        Post savePost = new Post(inputId, post.getAuthor(), post.getTitle(), post.getContent());
-        db.add(savePost);
+        MyPost saveMyPost = new MyPost(inputId, myPost.getAuthor(), myPost.getTitle(), myPost.getContent());
+        db.add(saveMyPost);
     }
 
 
@@ -72,9 +72,9 @@ public class PostRepositoryV1Impl implements PostRepositoryV1 {
      */
     @Override
     public void update(Long id, String author, String content, String title) {
-        Post post = db.stream().filter(i -> i.getId().equals(id))
+        MyPost myPost = db.stream().filter(i -> i.getId().equals(id))
                 .findFirst().get();
-        post.toEntity(author, title, content);
+        myPost.toEntity(author, title, content);
 
     }
 

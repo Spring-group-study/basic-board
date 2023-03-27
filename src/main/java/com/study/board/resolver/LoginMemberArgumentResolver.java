@@ -1,6 +1,6 @@
 package com.study.board.resolver;
 
-import com.study.board.entity.Member;
+import com.study.board.entity.MyMember;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -10,13 +10,13 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import static com.study.board.controller.LoginController.MEMBER_ID;
+import static com.study.board.controller.LoginControllerV1.MEMBER_ID;
 
 public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         boolean hasParameterAnnotation = parameter.hasParameterAnnotation(Login.class);
-        boolean hasMemberType = Member.class.isAssignableFrom(parameter.getParameterType());
+        boolean hasMemberType = MyMember.class.isAssignableFrom(parameter.getParameterType());
 
         return hasParameterAnnotation && hasMemberType;
     }

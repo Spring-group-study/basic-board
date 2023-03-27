@@ -1,10 +1,8 @@
 package com.study.board.dto;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 public class PostDto {
-    @NotNull
     private Long id;
     @NotEmpty
     private String author;
