@@ -25,43 +25,21 @@
             <br>
 
             <label for="nickname">닉네임: </label>
-            <input type="text" id="nickname" th:field="*{nickname}" th:errorclass="field-error" readonly>
+            <input type="text" id="nickname" th:field="*{nickname}" th:errorclass="field-error" >
 
             <br>
 
             <label for="password">비밀번호: </label>
-            <input type="text" id="password" th:field="*{password}" th:errorclass="field-error" readonly>
+            <input type="text" id="password" th:field="*{password}" th:errorclass="field-error" >
 
             <br>
-
-            <table class="table col-md-6">
-                <h2>작성 게시물 목록</h2>
-                <thead>
-                <tr>
-                    <th scope="col" class="col-md-1">번호</th>
-                    <th scope="col" class="col-md-4">제목</th>
-                    <th scope="col" class="col-md-1">작성자</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr scope="row" th:each="post : *{posts}">
-
-                    <td><a href="post" th:href="@{/board/post/{id} (id=${post.postId})}"
-                           th:text="${post.postId}">게시물id</a></td>
-
-                    <td><a href="post" th:href="@{/board/post/{id} (id=${post.postId})}"
-                           th:text="${post.title}">게시물 제목</a></td>
-
-                    <td th:text="${post.member.nickname}">작성자</td>
-
-                </tr>
-                </tbody>
-            </table>
+            <button class="btn btn-info" type="submit">
+                수정 완료
+            </button>
 
             <button class="btn btn-info" type="button" onclick="location.href='index.html'"
-                    th:onclick="|location.href='@{/member/individual/{memberId}/edit (memberId=*{memberId})}'|">
-                회원 정보 수정
+                    th:onclick="|location.href='@{/member/individual/{memberId}/delete (memberId=${memberId})}'|">
+                회원 탈퇴
             </button>
 
             <button class="btn btn-info" type="button" onclick="location.href='index.html'"

@@ -6,6 +6,7 @@ import com.study.board.dto.MemberDto;
 import com.study.board.dto.MemberDtoV2;
 import com.study.board.entity.Member;
 import com.study.board.entity.MemberV2;
+import com.study.board.entity.PostV2;
 import com.study.board.login.session.SessionConst;
 import com.study.board.service.MemberServiceV1;
 import com.study.board.service.MemberServiceV2;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -45,7 +47,7 @@ public class MemberControllerV2 {
 
         MemberV2 loginMember = memberServiceV2.login(member.getLoginId(), member.getPassword());
         if (loginMember == null) {
-            bindingResult.reject("Valid","해당 멤버가 존재하지 않습니다.");
+            bindingResult.reject("Valid", "해당 멤버가 존재하지 않습니다.");
         }
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
@@ -88,5 +90,33 @@ public class MemberControllerV2 {
         MemberV2 member = memberServiceV2.findById(memberId);
         model.addAttribute("member", member);
         return "member/individual";
+    }
+
+    @GetMapping("/individual/{memberId}/edit")
+    public String edit(@PathVariable Long memberId,Model model) {
+        MemberV2 member = memberServiceV2.findById(memberId);
+        MemberDtoV2 dto = new MemberDtoV2(member.getLoginId(), member.getNickname(), member.getPassword());
+        model.addAttribute("member", dto);
+        model.addAttribute("memberId", memberId);
+        return "member/edit";
+    }
+
+    @PostMapping("/individual/{memberId}/edit")
+    public String edit(@PathVariable Long memberId, @Validated @ModelAttribute("member") MemberDtoV2 dto, BindingResult bindingResult,
+                       RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            return "member/edit";
+        }
+        MemberV2 member = memberServiceV2.findById(memberId);
+        memberServiceV2.update(member, dto);
+        redirectAttributes.addAttribute("memberId", member.getMemberId());
+        return "redirect:/member/individual/{memberId}";
+    }
+
+    @GetMapping("/individual/{memberId}/delete")
+    public String delete(@PathVariable Long memberId,HttpServletRequest request) {
+        memberServiceV2.delete(memberId);
+        request.getSession().invalidate();
+        return "member/delete";
     }
 }

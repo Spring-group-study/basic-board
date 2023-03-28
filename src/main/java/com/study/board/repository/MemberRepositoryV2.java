@@ -4,6 +4,7 @@ import com.study.board.dto.MemberDto;
 import com.study.board.dto.MemberDtoV2;
 import com.study.board.entity.Member;
 import com.study.board.entity.MemberV2;
+import com.study.board.entity.PostV2;
 
 import java.util.List;
 import java.util.Optional;
