@@ -2,6 +2,7 @@ package com.study.board.service;
 
 import com.study.board.dto.MemberDtoV2;
 import com.study.board.entity.MemberV2;
+import com.study.board.entity.PostV2;
 import com.study.board.repository.MemberRepositoryV2;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

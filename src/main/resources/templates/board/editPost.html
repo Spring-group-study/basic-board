@@ -39,6 +39,10 @@
 
 
                     <button class="btn btn-primary offset-md-4" type="submit">수정완료</button>
+
+                    <button class="btn btn-primary " type="button" onclick="location.href='main.html'"
+                            th:onclick="|location.href='@{/board/post/{postId}/delete (postId=${postId})}'|">게시글 삭제</button>
+
                     <button class="btn btn-primary " type="button" onclick="location.href='main.html'"
                             th:onclick="|location.href='@{/board/post/{postId} (postId=${postId})}'|">취소</button>
                                         <!--목록으로 버튼(메인페이지로) 대신 취소버튼(뒤로가기)으로 바꿈-->

@@ -53,7 +53,7 @@ public class PostControllerV4 {     //validation 구현
     //단일 게시글
     @GetMapping("/post/{id}")
     //지연로딩 관련 에러
-    public String post(@PathVariable Long id, HttpServletRequest request,Model model) {
+    public String post(@PathVariable Long id, HttpServletRequest request, Model model) {
         PostV2 post = postService.findById(id);
 //        Boolean isAuthor = postService.isAuthor(id, request);
 
@@ -64,7 +64,7 @@ public class PostControllerV4 {     //validation 구현
 
     //게시글 등록
     @GetMapping("/addPost")
-    public String addPost(HttpServletRequest request,Model model) {
+    public String addPost(HttpServletRequest request, Model model) {
         MemberV2 loginMember = mapper.getMemberFromSession(request);
 
         PostDtoV2 post = new PostDtoV2(loginMember.getNickname());
@@ -81,7 +81,7 @@ public class PostControllerV4 {     //validation 구현
         if (bindingResult.hasErrors()) {
             return "board/addPost";
         }
-        Long savedPostId = postService.save(postDto,request);
+        Long savedPostId = postService.save(postDto, request);
         redirectAttributes.addAttribute("id", savedPostId);
         return "redirect:/board/post/{id}";
     }
@@ -108,5 +108,9 @@ public class PostControllerV4 {     //validation 구현
         return "redirect:/board/post/{id}";
     }
 
-
+    @GetMapping("/post/{id}/delete")
+    public String delete(@PathVariable Long id,HttpServletRequest request) {
+        postService.delete(id);
+        return "board/delete";
+    }
 }
