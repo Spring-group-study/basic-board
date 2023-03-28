@@ -35,6 +35,12 @@
             게시판페이지구현(V.3)
         </button>
     </p>
+    <p class="col">
+        <button class="w-100 btn btn-lg btn-info" type="button"
+                th:onclick="|location.href='@{/v4/posts/page}'|">
+           로그인 후 게시판페이지구현(V.4)
+        </button>
+    </p>
     </p>
 
     <div class="row">
@@ -54,6 +60,12 @@
             <button class="w-100 btn btn-secondary btn-lg" type="button"
                     th:onclick="|location.href='@{/v3/posts/new}'|">
                 글 쓰기(V.3)
+            </button>
+        </div>
+        <div class="col">
+            <button class="w-100 btn btn-secondary btn-lg" type="button"
+                    th:onclick="|location.href='@{/v4/posts/new}'|">
+               로그인 후 글 쓰기(V.4)
             </button>
         </div>
         <div class="col">

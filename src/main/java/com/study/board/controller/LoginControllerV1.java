@@ -14,8 +14,6 @@ import javax.servlet.http.HttpSession;
 
 //@Controller
 public class LoginControllerV1 {
-
-    public static final String MEMBER_ID = "memberId";
     private final LoginServiceV1 loginServiceV1;
 
     public LoginControllerV1(LoginServiceV1 loginServiceV1) {
@@ -43,7 +41,7 @@ public class LoginControllerV1 {
             if (redirector == null){
                 redirector = "/";
             }
-            session.setAttribute(MEMBER_ID, myMember);
+            session.setAttribute(MemberId.MEMBER_ID, myMember);
             return "redirect:"+redirector;
         }
     }
