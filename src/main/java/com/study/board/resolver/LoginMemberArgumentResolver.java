@@ -1,5 +1,6 @@
 package com.study.board.resolver;
 
+import com.study.board.controller.MemberId;
 import com.study.board.entity.MyMember;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -10,7 +11,6 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import static com.study.board.controller.LoginControllerV1.MEMBER_ID;
 
 public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
@@ -29,6 +29,6 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
         if (session == null) {
             return null;
         }
-        return session.getAttribute(MEMBER_ID);
+        return session.getAttribute(MemberId.MEMBER_ID);
     }
 }

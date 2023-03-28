@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -14,10 +15,12 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @Column(name = "mem_id", nullable = false)
     private Long id;
 
     private String memberId;
     private String password;
 
+    @OneToMany(mappedBy = "member")
+    private List<Post> posts;
 }
