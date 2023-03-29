@@ -28,9 +28,6 @@ import java.util.List;
 @RequestMapping("/board")
 @RequiredArgsConstructor
 public class PostControllerV4 {     //validation 구현
-    /**
-     * @ModelAttribute에는 꼭 반환타입이 디폴트 생성자를 갖고있어야한다.
-     */
 
     private final PostServiceV4 postService;
     private final MapperV5 mapper;
@@ -38,7 +35,6 @@ public class PostControllerV4 {     //validation 구현
     //게시판 메인
     @GetMapping("/main/{page}")
     public String posts(@PathVariable int page, Model model) {
-        //파라미터의 page가 0부터가 1페이지라서 page-1넣어줘야 함
         Pageable pageable = PageRequest.of(page-1, JpaPagingConst.POST_CNT_PER_PAGE,Sort.by("postId").descending());
 
         model.addAttribute("pagination", new JpaPagination(postService.postCnt(), page));
@@ -77,7 +73,6 @@ public class PostControllerV4 {     //validation 구현
 
     //단일 게시글
     @GetMapping("/post/{id}")
-    //지연로딩 관련 에러
     public String post(@PathVariable Long id, HttpServletRequest request, Model model) {
         PostV2 post = postService.findById(id);
 //        Boolean isAuthor = postService.isAuthor(id, request);

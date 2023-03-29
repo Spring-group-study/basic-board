@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class PostV2 {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //AUTO로 하면 init() 실행시 pk가 member의 pk에 이어서 만들어짐
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
 
     @ManyToOne(fetch = FetchType.LAZY)
