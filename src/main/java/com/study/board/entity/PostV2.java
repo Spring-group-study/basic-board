@@ -21,6 +21,7 @@ public class PostV2 {
 
     private String title;
     private String content;
+    private LocalDateTime createTime=LocalDateTime.now();
 
 
 

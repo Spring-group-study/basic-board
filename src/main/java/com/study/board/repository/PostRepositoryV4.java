@@ -6,6 +6,9 @@ import com.study.board.entity.MemberV2;
 import com.study.board.entity.Post;
 import com.study.board.entity.PostV2;
 import com.study.board.paging.Pagination;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
