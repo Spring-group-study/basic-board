@@ -24,6 +24,10 @@
     <h2 class="text-center" style="margin-top:10%">로그인</h2>
     <form action="login.html" th:action method="post" th:object="${member}">
         <div style="margin-top:5%">
+            <div class="offset-md-5" th:if="${#fields.hasGlobalErrors()}">
+                <p class="field-error" th:each="err :${#fields.globalErrors()} "
+                th:text="${err}">글로벌 오류 메세지</p>
+            </div>
             <label class="row-margin offset-md-5" for="loginId">      ID: </label>
             <input class="row-margin" type="text" id="loginId" th:field="*{loginId}" th:errorclass="field-error">
             <div class="field-error offset-md-5" th:errors="*{loginId}">

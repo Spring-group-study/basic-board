@@ -31,8 +31,14 @@ public class MemberServiceV2 {
         }
     }
 
+
+
     public MemberV2 findById(Long id) {
         return memberRepository.findById(id);
+    }
+
+    public MemberV2 findByLoginId(String loginId) {
+        return memberRepository.findByLoginId(loginId);
     }
 
     public List<MemberV2> findAll() {

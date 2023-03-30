@@ -41,6 +41,12 @@ public class MemberControllerV2 {
     @PostMapping("/login")  //로그인DTO를 따로 만들어 줘야 오류가 안남
     public String login(@Validated @ModelAttribute("member") LoginDtoV2 member, BindingResult bindingResult,
                         @RequestParam(defaultValue = "/") String redirectURI, HttpServletRequest request) {
+
+        //글로벌 오류
+        if (memberServiceV2.login(member.getLoginId(), member.getPassword()) == null) {
+            bindingResult.reject("loginFailure");
+        }
+
         if (bindingResult.hasErrors()) {
             return "member/login";
         }
@@ -72,9 +78,18 @@ public class MemberControllerV2 {
     @PostMapping("/register")
     public String register(@Validated @ModelAttribute("member") MemberDtoV2 member, BindingResult bindingResult,
                            RedirectAttributes redirectAttributes, HttpServletRequest request) {
+
+        if (memberServiceV2.findByLoginId(member.getLoginId())!=null) {
+            bindingResult.rejectValue("loginId","registerFailure","해당 ID 사용 못함");
+        }
+
         if (bindingResult.hasErrors()) {
+            //얘가 마지막에 와야함
             return "member/register";
         }
+
+
+
         Long savedMemberId = memberServiceV2.save(member);
         MemberV2 savedMember = memberServiceV2.findById(savedMemberId);
 
