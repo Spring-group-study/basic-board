@@ -41,9 +41,10 @@ public class MemberControllerV2 {
     @PostMapping("/login")  //로그인DTO를 따로 만들어 줘야 오류가 안남
     public String login(@Validated @ModelAttribute("member") LoginDtoV2 member, BindingResult bindingResult,
                         @RequestParam(defaultValue = "/") String redirectURI, HttpServletRequest request) {
+        MemberV2 loginMember = memberServiceV2.login(member.getLoginId(), member.getPassword());
 
         //글로벌 오류
-        if (memberServiceV2.login(member.getLoginId(), member.getPassword()) == null) {
+        if (loginMember == null) {
             bindingResult.reject("loginFailure");
         }
 
@@ -51,10 +52,6 @@ public class MemberControllerV2 {
             return "member/login";
         }
 
-        MemberV2 loginMember = memberServiceV2.login(member.getLoginId(), member.getPassword());
-        if (loginMember == null) {
-            bindingResult.reject("Valid", "해당 멤버가 존재하지 않습니다.");
-        }
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
