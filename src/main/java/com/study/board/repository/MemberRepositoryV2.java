@@ -14,7 +14,7 @@ public interface MemberRepositoryV2 {
 
     public MemberV2 findById(Long id);
 
-    public MemberV2 findByLoginId(String loginId);
+    public List<MemberV2> findByLoginId(String loginId);
 
     public List<MemberV2> findAll();
 

@@ -22,22 +22,11 @@ public class MemberServiceV2 {
         return memberRepository.save(dto);
     }
 
-    public MemberV2 login(String loginId, String pw) {
-        MemberV2 member = memberRepository.findByLoginId(loginId);
-        if (member != null && member.getPassword().equals(pw)) {
-            return member;
-        }else{
-            return null;
-        }
-    }
-
-
-
     public MemberV2 findById(Long id) {
         return memberRepository.findById(id);
     }
 
-    public MemberV2 findByLoginId(String loginId) {
+    public List<MemberV2> findByLoginId(String loginId) {
         return memberRepository.findByLoginId(loginId);
     }
 

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -28,10 +29,10 @@ public class MemberRepositoryImplV2 implements MemberRepositoryV2 {
     }
 
     @Override
-    public MemberV2 findByLoginId(String loginId) {
+    public List<MemberV2> findByLoginId(String loginId) {
         return em.createQuery("select m from MemberV2 m where m.loginId=:loginIdParam", MemberV2.class)
                 .setParameter("loginIdParam", loginId)
-                .getSingleResult();
+                .getResultList();
     }
 
     @Override
