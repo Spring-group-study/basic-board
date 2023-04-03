@@ -3,24 +3,42 @@ package com.study.board.controller;
 import com.study.board.dto.PostDtoV2;
 import com.study.board.entity.MemberV2;
 import com.study.board.entity.PostV2;
+import com.study.board.file.FileStore;
 import com.study.board.jpapaging.JpaPagination;
 import com.study.board.jpapaging.JpaPagingConst;
 import com.study.board.mapper.MapperV5;
 import com.study.board.repository.PostJpaRepository;
 import com.study.board.service.PostServiceV4;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StreamUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 import java.util.List;
 
 @Slf4j
@@ -31,6 +49,7 @@ public class PostControllerV4 {     //validation 구현
 
     private final PostServiceV4 postService;
     private final MapperV5 mapper;
+    private final FileStore fileStore;
 
     //게시판 메인
     @GetMapping("/main/{page}")
@@ -97,13 +116,36 @@ public class PostControllerV4 {     //validation 구현
     public String addPost(@Validated @ModelAttribute("post") PostDtoV2 postDto,
                           BindingResult bindingResult,          //BindingResult는 항상 ModelAttribute 바로뒤에 써야함
                           HttpServletRequest request,
-                          RedirectAttributes redirectAttributes) {
+                          RedirectAttributes redirectAttributes) throws ServletException, IOException {
         if (bindingResult.hasErrors()) {
             return "board/addPost";
         }
         Long savedPostId = postService.save(postDto, request);
+        PostV2 post = postService.findById(savedPostId);
+        post.setAttachFile(fileStore.storeFile(postDto.getAttachFile()));
+        post.setImageFiles(fileStore.storeFiles(postDto.getImageFiles()));
         redirectAttributes.addAttribute("id", savedPostId);
         return "redirect:/board/post/{id}";
+    }
+
+    //이미지파일 업로드
+    @ResponseBody
+    @GetMapping("/post/images/{filename}")
+    public Resource downloadImageFiles(@PathVariable String filename) throws MalformedURLException {
+        return new UrlResource("file:" + fileStore.getFullPath(filename));
+    }
+
+    //첨부파일 다운로드
+    @GetMapping("/post/{id}/attach")
+    public ResponseEntity<Resource> downloadAttach(@PathVariable Long id) throws MalformedURLException {
+        PostV2 post = postService.findById(id);
+        String storeFileName = post.getAttachFile().getStoreFileName();
+        String uploadFileName = post.getAttachFile().getUploadFileName();
+
+        UrlResource urlResource = new UrlResource("file:" + fileStore.getFullPath(storeFileName));
+        String contentDisposition="attachment; filename=\""+uploadFileName+"\"";
+
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition).body(urlResource);
     }
 
     //게시글 수정 -> 접근 validation 필요

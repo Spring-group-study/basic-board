@@ -21,7 +21,7 @@
 
         <div class="container">
 
-            <form action="addPost.html" th:action th:object="${post}" method="post">
+            <form action="addPost.html" th:action th:object="${post}" method="post" enctype="multipart/form-data">
                 <div class="col-md-6 offset-md-3">
                     <div>
                         <label for="author">작성자: </label>
@@ -39,6 +39,16 @@
                         <div class="field-error" th:errors="*{title}">
                             제목 오류
                         </div>
+                    </div>
+
+                    <div>
+                        <label for="attachFile">첨부파일: </label>
+                        <input id="attachFile" type="file" th:field="*{attachFile}" rows="1" cols="70"></input>
+                    </div>
+
+                    <div>
+                        <label for="imageFiles">이미지파일 업로드: </label>
+                        <input id="imageFiles" type="file" multiple="multiple" th:field="*{imageFiles}" rows="1" cols="70"></input>
                     </div>
 
                     <div>

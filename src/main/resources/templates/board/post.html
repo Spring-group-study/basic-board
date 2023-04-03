@@ -22,7 +22,15 @@
             <label for="title">제목  : </label>
             <textarea id="title" th:field="*{title}" rows="1" cols="70" readonly></textarea>
 
+            <div>
+                <label>첨부파일: </label>
+                <a th:if="${post.attachFile}" th:href="|/board/post/*{postId}/attach|"
+                   th:text="${post.getAttachFile().getUploadFileName()}" /><br/>
+            </div>
+
             <textarea th:field="*{content}" rows="30" cols="100" readonly></textarea>
+
+            <img th:each="imageFile : *{imageFiles}" th:src="|/board/post/images/{filename} (filename='${imageFile.getStoreFileName()}')|" width="300" height="300"/>
 
             <div th:if="${isAuthor}==*{member.memberId}" style="display:inline">
                 <button class="btn btn-primary offset-md-4" type="button"
