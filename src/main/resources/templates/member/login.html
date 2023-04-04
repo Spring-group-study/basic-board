@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <meta charset="utf-8">
+
+    <style>
+        button{
+            width:115px;
+            margin-top:5%;
+        }
+        .field-error {
+                 border-color: #dc3545;
+                 color: #dc3545;
+            }
+        .row-margin{
+            margin-top:3px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 class="text-center" style="margin-top:10%">로그인</h2>
+    <form action="login.html" th:action method="post" th:object="${member}">
+        <div style="margin-top:5%">
+            <div class="offset-md-5" th:if="${#fields.hasGlobalErrors()}">
+                <p class="field-error" th:each="err :${#fields.globalErrors()} "
+                th:text="${err}">글로벌 오류 메세지</p>
+            </div>
+            <label class="row-margin offset-md-5" for="loginId">      ID: </label>
+            <input class="row-margin" type="text" id="loginId" th:field="*{loginId}" th:errorclass="field-error">
+            <div class="field-error offset-md-5" th:errors="*{loginId}">
+                ID 오류
+            </div>
+            <br>
+
+            <label class="row-margin offset-md-5" for="password">비밀번호: </label>
+            <input class="row-margin" type="password" id="password" th:field="*{password}" th:errorclass="field-error">
+            <div class="field-error offset-md-5" th:errors="*{password}">
+                비밀번호 오류
+            </div>
+            <br>
+
+            <button class="btn btn-primary offset-md-5" type="submit">로그인</button>
+            <button class="btn btn-info" type="button" onclick="location.href='index.html'" th:onclick="|location.href='@{/}'|">
+                메인으로
+            </button>
+        </div>
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</div>
+</body>
+</html>
