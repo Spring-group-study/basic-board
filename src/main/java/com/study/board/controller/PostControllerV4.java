@@ -122,8 +122,8 @@ public class PostControllerV4 {     //validation 구현
         }
         Long savedPostId = postService.save(postDto, request);
         PostV2 post = postService.findById(savedPostId);
-        post.setAttachFile(fileStore.storeFile(postDto.getAttachFile()));
-        post.setImageFiles(fileStore.storeFiles(postDto.getImageFiles()));
+        postService.saveAttachFile(post,fileStore.storeFile(postDto.getAttachFile()));
+        postService.saveImageFiles(post,fileStore.storeFiles(postDto.getImageFiles()));
         redirectAttributes.addAttribute("id", savedPostId);
         return "redirect:/board/post/{id}";
     }
@@ -135,7 +135,7 @@ public class PostControllerV4 {     //validation 구현
         return new UrlResource("file:" + fileStore.getFullPath(filename));
     }
 
-    //첨부파일 다운로드
+    //첨부파일 다운로드 + uploadFileName 한글이면 오류터짐
     @GetMapping("/post/{id}/attach")
     public ResponseEntity<Resource> downloadAttach(@PathVariable Long id) throws MalformedURLException {
         PostV2 post = postService.findById(id);

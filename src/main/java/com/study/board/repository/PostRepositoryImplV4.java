@@ -1,8 +1,10 @@
 package com.study.board.repository;
 
 import com.study.board.dto.PostDtoV2;
+import com.study.board.entity.FileType;
 import com.study.board.entity.MemberV2;
 import com.study.board.entity.PostV2;
+import com.study.board.entity.UploadFile;
 import com.study.board.jpapaging.JpaPagingConst;
 import com.study.board.login.session.SessionConst;
 import com.study.board.mapper.MapperV5;
@@ -30,6 +32,24 @@ public class PostRepositoryImplV4 implements PostRepositoryV4 {
         PostV2 post = mapper.postSaveDtoToEntity(dto, request);
         em.persist(post);
         return post.getPostId();
+    }
+
+    @Override
+    public void saveAttachFile(PostV2 post, UploadFile file) {
+        em.persist(file);
+        em.persist(post);
+        file.setType(FileType.ATTACH);
+        file.setPost(post);
+    }
+
+    @Override
+    public void saveImageFiles(PostV2 post, List<UploadFile> files) {
+        em.persist(post);
+        for (UploadFile file : files) {
+            em.persist(file);
+            file.setType(FileType.IMAGE);
+            file.setPost(post);
+        }
     }
 
     @Override

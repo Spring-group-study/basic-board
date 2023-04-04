@@ -24,13 +24,13 @@
 
             <div>
                 <label>첨부파일: </label>
-                <a th:if="${post.attachFile}" th:href="|/board/post/*{postId}/attach|"
-                   th:text="${post.getAttachFile().getUploadFileName()}" /><br/>
+                <a th:if="*{getAttachFile()!=null}" th:href="|/board/post/*{postId}/attach|"
+                   th:text="${post.getAttachFile().getUploadFileName()}">첨부파일 이름</a>
             </div>
 
             <textarea th:field="*{content}" rows="30" cols="100" readonly></textarea>
 
-            <img th:each="imageFile : *{imageFiles}" th:src="|/board/post/images/{filename} (filename='${imageFile.getStoreFileName()}')|" width="300" height="300"/>
+            <img th:each="imageFile : *{getImageFiles()}" th:src="|@{/board/post/images/{filename} (filename=${imageFile.getStoreFileName()})}|" width="300" height="300"/>
 
             <div th:if="${isAuthor}==*{member.memberId}" style="display:inline">
                 <button class="btn btn-primary offset-md-4" type="button"

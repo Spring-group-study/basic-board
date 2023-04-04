@@ -4,6 +4,7 @@ import com.study.board.dto.PostDtoV2;
 import com.study.board.entity.MemberV2;
 import com.study.board.entity.Post;
 import com.study.board.entity.PostV2;
+import com.study.board.entity.UploadFile;
 import com.study.board.repository.PostJpaRepository;
 import com.study.board.repository.PostRepositoryV4;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,14 @@ public class PostServiceV4 {
 
     public Long save(PostDtoV2 dto, HttpServletRequest request) {
         return postRepository.save(dto,request);
+    }
+
+    public void saveAttachFile(PostV2 post, UploadFile file) {
+        postRepository.saveAttachFile(post,file);
+    }
+
+    public void saveImageFiles(PostV2 post, List<UploadFile> files) {
+        postRepository.saveImageFiles(post, files);
     }
 
     public PostV2 findById(Long id) {

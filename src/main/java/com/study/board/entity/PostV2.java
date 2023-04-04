@@ -23,11 +23,26 @@ public class PostV2 {
     private MemberV2 member;
 
     @OneToMany(mappedBy = "post")
-    private List<UploadFile> imageFiles = new ArrayList<>();
+    private List<UploadFile> files = new ArrayList<>();
 
-    @OneToOne
-    @JoinColumn(name="file_id")
-    private UploadFile attachFile;
+    public UploadFile getAttachFile() {
+        for (UploadFile file : files) {
+            if (file.getType() == FileType.ATTACH) {
+                return file;
+            }
+        }
+        return null;
+    }
+
+    public List<UploadFile> getImageFiles() {
+        List<UploadFile> rs = new ArrayList<>();
+        for (UploadFile file : files) {
+            if (file.getType() == FileType.IMAGE) {
+                rs.add(file);
+            }
+        }
+        return rs;
+    }
 
     private String title;
     private String content;
@@ -45,8 +60,4 @@ public class PostV2 {
         this.content = content;
     }
 
-    public PostV2(List<UploadFile> imageFiles, UploadFile attachFile) {
-        this.imageFiles = imageFiles;
-        this.attachFile = attachFile;
-    }
 }

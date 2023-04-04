@@ -5,6 +5,7 @@ import com.study.board.dto.PostDtoV2;
 import com.study.board.entity.MemberV2;
 import com.study.board.entity.Post;
 import com.study.board.entity.PostV2;
+import com.study.board.entity.UploadFile;
 import com.study.board.paging.Pagination;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,10 @@ import java.util.List;
 
 public interface PostRepositoryV4 {
     public Long save(PostDtoV2 dto, HttpServletRequest request);
+
+    public void saveAttachFile(PostV2 post, UploadFile file);
+
+    public void saveImageFiles(PostV2 post, List<UploadFile> files);
 
     public PostV2 findByPostId(Long id);
 
