@@ -1,10 +1,13 @@
 package com.study.board.entity;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -12,15 +15,38 @@ import java.time.LocalDateTime;
 public class PostV2 {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //AUTO로 하면 init() 실행시 pk가 member의 pk에 이어서 만들어짐
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private MemberV2 member;
 
+    @OneToMany(mappedBy = "post")
+    private List<UploadFile> files = new ArrayList<>();
+
+    public UploadFile getAttachFile() {
+        for (UploadFile file : files) {
+            if (file.getType() == FileType.ATTACH) {
+                return file;
+            }
+        }
+        return null;
+    }
+
+    public List<UploadFile> getImageFiles() {
+        List<UploadFile> rs = new ArrayList<>();
+        for (UploadFile file : files) {
+            if (file.getType() == FileType.IMAGE) {
+                rs.add(file);
+            }
+        }
+        return rs;
+    }
+
     private String title;
     private String content;
+    private LocalDateTime createTime=LocalDateTime.now();
 
 
 
@@ -33,4 +59,5 @@ public class PostV2 {
         this.title = title;
         this.content = content;
     }
+
 }

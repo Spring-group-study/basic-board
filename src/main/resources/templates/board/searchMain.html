@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        nav{
+            margin:auto;
+        }
+    </style>
+</head>
+
+<body>
+<h1 class="text-center">검색 된 게시물</h1>
+<div class="container">
+    <table class="table col-md-8 text-center">
+        <thead>
+        <tr>
+            <th scope="col" class="col-md-2">번호</th>
+            <th scope="col" class="col-md-5">제목</th>
+            <th scope="col" class="col-md-2">작성자</th>
+            <th scope="col" class="col-md-3">작성일자</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr scope="row" th:each="post : ${posts}">
+
+            <td><a href="post" th:href="@{/board/post/{id} (id=${post.postId})}"
+                   th:text="${post.postId}">게시물id</a></td>
+
+            <td><a href="post" th:href="@{/board/post/{id} (id=${post.postId})}"
+                   th:text="${post.title}">게시물 제목</a></td>
+
+            <td th:text="${post.member.nickname}">작성자</td>
+
+            <td th:text="${post.createTime}">작성일자</td>
+
+        </tr>
+        </tbody>
+    </table>
+
+    <form method="post">
+        <div>
+            <input type="text" id="keyword" name="keyword" th:value="${keyword}">
+            <button type="submit">검색</button>
+        </div>
+    </form>
+    <!--<nav aria-label="Page navigation example" class="col-md-8">
+        <ul class="pagination offset-md-4">
+            <li class="page-item"><a class="page-link" th:href="@{/board/main/{page} (page=${pagination.prePageStartPage})}">Pre</a></li>
+
+            <div th:each=" page : ${pagesInCurrentBlock}">
+                <li class="page-item"><a class="page-link" th:text="${page}"
+                                         th:href="@{/board/main/{page} (page=${page})}">1</a></li>
+            </div>
+
+            <li class="page-item"><a class="page-link" th:href="@{/board/main/{page} (page=${pagination.nextPageStartPage})}">Next</a></li>
+        </ul>
+    </nav>-->
+
+    <button class="btn btn-primary offset-md-5" type="button" th:onclick="|location.href='@{/board/addPost}'|">게시글 작성</button>
+    <button class="btn btn-info" type="button" onclick="location.href='index.html'"
+            th:onclick="|location.href='@{/}'|">
+        메인으로
+    </button>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

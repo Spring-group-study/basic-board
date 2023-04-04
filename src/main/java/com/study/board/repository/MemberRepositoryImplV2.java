@@ -1,23 +1,12 @@
 package com.study.board.repository;
 
-import com.study.board.dto.MemberDto;
 import com.study.board.dto.MemberDtoV2;
-import com.study.board.entity.Member;
 import com.study.board.entity.MemberV2;
-import com.study.board.entity.PostV2;
-import com.study.board.mapper.MapperV4;
 import com.study.board.mapper.MapperV5;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -40,10 +29,10 @@ public class MemberRepositoryImplV2 implements MemberRepositoryV2 {
     }
 
     @Override
-    public MemberV2 findByLoginId(String loginId) {
+    public List<MemberV2> findByLoginId(String loginId) {
         return em.createQuery("select m from MemberV2 m where m.loginId=:loginIdParam", MemberV2.class)
                 .setParameter("loginIdParam", loginId)
-                .getSingleResult();
+                .getResultList();
     }
 
     @Override
@@ -62,8 +51,10 @@ public class MemberRepositoryImplV2 implements MemberRepositoryV2 {
 
     @Override
     public void delete(Long id) {
-        MemberV2 member = findById(id);
-        em.remove(member);
+        MemberV2 member = em.find(MemberV2.class, id);
+        String jpql = "delete from PostV2 where member_id=:id ";
+        em.createQuery(jpql).setParameter("id",id).executeUpdate();
+        em.remove(member);      //순서 중요 : 멤버 먼저 삭제하면 post 의 fk 제약조건 위반 오류 뜸
     }
 
     @Override

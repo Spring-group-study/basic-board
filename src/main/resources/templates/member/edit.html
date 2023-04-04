@@ -5,9 +5,13 @@
     <meta charset="utf-8">
 
     <style>
-        .container {
-                max-width: 560px;
-            }
+        button{
+            width:115px;
+            margin-top:5%;
+        }
+        .row-margin{
+            margin-top:3px;
+        }
         .field-error {
                  border-color: #dc3545;
                  color: #dc3545;
@@ -16,24 +20,29 @@
 </head>
 <body>
 <div class="container">
+    <h2 class="text-center" style="margin-top:10%">회원 정보 수정</h2>
 
     <form action="register.html" th:action method="post" th:object="${member}">
-        <div class="col-md-6 offset-md-2">
-            <label for="loginId">ID: </label>
-            <input type="text" id="loginId" th:field="*{loginId}" th:errorclass="field-error" readonly>
+        <div class="col-md-6 offset-md-2" style="margin-top:5%">
+            <label class="row-margin offset-md-5" for="loginId">ID: </label>
+            <input class="row-margin" type="text" id="loginId" th:field="*{loginId}" th:errorclass="field-error" readonly>
 
             <br>
 
-            <label for="nickname">닉네임: </label>
+            <label class="row-margin offset-md-5" for="nickname">닉네임: </label>
             <input type="text" id="nickname" th:field="*{nickname}" th:errorclass="field-error" >
-
+            <div class="field-error offset-md-5" th:errors="*{nickname}">
+                닉네임 오류
+            </div>
             <br>
 
-            <label for="password">비밀번호: </label>
-            <input type="text" id="password" th:field="*{password}" th:errorclass="field-error" >
-
+            <label class="row-margin offset-md-5" for="password">비밀번호: </label>
+            <input class="row-margin" type="text" id="password" th:field="*{password}" th:errorclass="field-error" >
+            <div class="field-error offset-md-5" th:errors="*{password}">
+                비밀번호 오류
+            </div>
             <br>
-            <button class="btn btn-info" type="submit">
+            <button class="btn btn-info offset-md-4" type="submit">
                 수정 완료
             </button>
 

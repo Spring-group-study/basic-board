@@ -21,6 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LoginInterceptor())
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/", "/error","/board/main/*","/member/register", "/member/login","/css/**","/*.ico");
+                .excludePathPatterns("/", "/board/searchMain/*", "/error", "/board/main/*", "/member/register", "/member/login", "/css/**", "/*.ico");
+        //excludePathPatterns에서 파라미터는 무시하는건지...?
     }
 }

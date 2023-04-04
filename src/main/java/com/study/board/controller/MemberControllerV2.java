@@ -41,14 +41,27 @@ public class MemberControllerV2 {
     @PostMapping("/login")  //로그인DTO를 따로 만들어 줘야 오류가 안남
     public String login(@Validated @ModelAttribute("member") LoginDtoV2 member, BindingResult bindingResult,
                         @RequestParam(defaultValue = "/") String redirectURI, HttpServletRequest request) {
+
+        List<MemberV2> idChecked = memberServiceV2.findByLoginId(member.getLoginId());
+
+        if (idChecked.isEmpty()) {
+            bindingResult.rejectValue("loginId","loginIdFailure");
+            return "member/login";
+        }
+        //ID 검증 완료
+
+        if (!idChecked.get(0).getPassword().equals(member.getPassword())) {
+            bindingResult.rejectValue("password","loginPwFailure");
+        }
+        //PW 검증 완료
+
         if (bindingResult.hasErrors()) {
             return "member/login";
         }
 
-        MemberV2 loginMember = memberServiceV2.login(member.getLoginId(), member.getPassword());
-        if (loginMember == null) {
-            bindingResult.reject("Valid", "해당 멤버가 존재하지 않습니다.");
-        }
+        MemberV2 loginMember = idChecked.get(0);
+        //여기까지 내려오면 로그인 검증 완료
+
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
@@ -72,9 +85,17 @@ public class MemberControllerV2 {
     @PostMapping("/register")
     public String register(@Validated @ModelAttribute("member") MemberDtoV2 member, BindingResult bindingResult,
                            RedirectAttributes redirectAttributes, HttpServletRequest request) {
+
+        if (!memberServiceV2.findByLoginId(member.getLoginId()).isEmpty()) {
+            bindingResult.rejectValue("loginId","registerFailure");
+        }
+
         if (bindingResult.hasErrors()) {
+            //얘가 마지막에 와야함
             return "member/register";
         }
+
+
         Long savedMemberId = memberServiceV2.save(member);
         MemberV2 savedMember = memberServiceV2.findById(savedMemberId);
 
